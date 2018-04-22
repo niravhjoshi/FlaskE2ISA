@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="col-md-4">
+ <h1>E2ISA Earning Add</h1>
+<form action="" method="post">
+{{ form.hidden_tag() }}
+<p>
+{{ form.Ear_per_name.label }}<br>
+{{ form.Ear_per_name }}
+{% for error in form.Ear_type_name.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+<p>
+{{ form.Ear_type_name.label }}<br>
+{{ form.Ear_type_name }}
+    {% for error in form.Ear_type_name.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+{{ form.Ear_amt.label }}<br>
+{{ form.Ear_amt(size=32) }}
+    {% for error in form.Ear_amt.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+{{ form.Ear_date.label }}<br>
+{{ form.Ear_date }}
+    {% for error in form.Ear_date.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+{{ form.Ear_img.label }}<br>
+{{ form.Ear_img }}
+    {% for error in form.Ear_img.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+    <p>
+{{ form.Ear_comm.label }}<br>
+{{ form.Ear_comm }}
+    {% for error in form.Ear_comm.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+
+
+<p>{{ form.submit() }}</p>
+</form>
+</div>
+{% endblock %}

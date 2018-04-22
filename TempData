@@ -1,0 +1,8 @@
+$smtpServer = "email-smtp.us-west-2.amazonaws.com"
+$smtpPort = 587
+$username = "AKIAJL5FE6U5YBP4FLBA"
+$password = "AteHIoJxzNZ7nnfsH3bT7C1Cw2QWmPNk4v/kxzj8Jkak"
+$from = "nirav.j05@gmail.com"
+$to = "vinutha@pictorialenergy.co.in"
+$subject = "Database backup is done as night job "
+$body = "Database backup is completed and now moving database backup file to s3 location for durable storage"
