@@ -22,7 +22,7 @@ def login():
             flash('Invalid Login Name or Password')
             return redirect(url_for('login'))
         login_user(user,remember=form.remember_me.data)
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     return  render_template('auth/login.html',title='E2ISA Login Here',form=form)
 
 #This decorator function will be for logout
@@ -35,13 +35,13 @@ def logout():
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(nickname=form.nickname.data, email=form.email.data,mob=int(form.mob.data))
+        user = User(nickname=form.nickname.data,email=form.email.data,mob=int(form.mob.data))
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
     return render_template('auth/register.html', title='Register', form=form)

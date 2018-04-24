@@ -68,3 +68,5 @@ from app.error  import bp as errorbp
 app.register_blueprint(errorbp)
 from app.main import bp as mainbp
 app.register_blueprint(mainbp)
+from app.addEPES import bp as addEPESbp
+app.register_blueprint(addEPESbp)

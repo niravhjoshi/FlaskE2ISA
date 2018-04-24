@@ -25,11 +25,10 @@ class User(UserMixin,db.Model):
     ladate = db.Column(db.DateTime, default=datetime.utcnow())
     mob = db.Column(db.BigInteger, unique=True, nullable=True)
     confirmed = db.Column(db.Boolean, default=False)
-    Earner = db.relationship('Earnings',backref = 'earner',lazy = 'dynamic')
-    Investor = db.relationship('Investments',backref ='investor',lazy='dynamic')
-    Expensor = db.relationship('Expenses',backref ='expensor',lazy='dynamic')
-    Sharesor = db.relationship('Shares',backref='sharesor',lazy='dynamic')
     PersonName= db.relationship('Persons',backref='persor',lazy='dynamic')
+    EarType = db.relationship('EarType',backref='eartypefk',lazy='dynamic')
+    InvType = db.relationship('InvType',backref='invtypefk',lazy='dynamic')
+    ExpType = db.relationship('ExpType',backref='exptypefk',lazy='dynamic')
 
     def set_password(self, password):
         self.pwd_hash = generate_password_hash(password)

@@ -10,7 +10,7 @@ class Earnings(db.Model):
     __tablename__ = 'Earnings'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
-    u_id = db.Column(db.Integer, db.ForeignKey('Users.id'), nullable=False) #This is foreign key to users table so that id will be identify unique.
+    Per_id = db.Column(db.Integer, db.ForeignKey('Persons.id'),nullable=False)  # This is foreign key to Persons table so that id will be identify unique.
     Ear_per_name = db.Column(db.String(64), index=True)
     Ear_type_name = db.Column(db.String(100),index=True)
     Ear_amt = db.Column(db.Float)

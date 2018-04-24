@@ -10,7 +10,7 @@ class Expenses(db.Model):
     __tablename__ = 'Expesnes'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
-    u_id = db.Column(db.Integer, db.ForeignKey('Users.id'), nullable=False)
+    per_id = db.Column(db.Integer, db.ForeignKey('Persons.id'), nullable=False)
     Exp_per_name = db.Column(db.String(64), index=True)
     Exp_type_name = db.Column(db.String(100),index=True)
     Exp_amt = db.Column(db.Float)
