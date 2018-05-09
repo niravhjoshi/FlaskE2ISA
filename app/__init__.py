@@ -60,13 +60,13 @@ from models.Investtype_model import InvType
 from models.Person_model import Persons
 
 #Blueprint Import with all blueprint available
-from app.earnings import bp as earningbp
-app.register_blueprint(earningbp)
-from app.auth import bp as authbp
-app.register_blueprint(authbp)
-from app.error  import bp as errorbp
-app.register_blueprint(errorbp)
-from app.main import bp as mainbp
-app.register_blueprint(mainbp)
-from app.addEPES import bp as addEPESbp
-app.register_blueprint(addEPESbp)
+from app.earnings import bp as earning
+app.register_blueprint(earning)
+from app.auth import bp as auth
+app.register_blueprint(auth)
+from app.error  import bp as error
+app.register_blueprint(error)
+from app.main import bp as main
+app.register_blueprint(main)
+from app.addEPES import bp as addEPES
+app.register_blueprint(addEPES)

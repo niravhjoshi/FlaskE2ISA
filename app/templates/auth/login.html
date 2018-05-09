@@ -9,20 +9,20 @@
 {{ form.hidden_tag() }}
 <p>
 {{ form.username.label }}<br>
-{{ form.username(size=32) }}
+{{ form.username(size=32,class='form-control') }}
     {% for error in form.username.errors %}
 <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
 </p>
 <p>
 {{ form.password.label }}<br>
-{{ form.password(size=32) }}
+{{ form.password(size=32,class='form-control') }}
     {% for error in form.password.errors %}
 <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
 </p>
 <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-<p>{{ form.submit() }}</p>
+<p>{{ form.submit(class='btn btn-primary') }}</p>
      <p><a href="">Login with Facebook</a></p>
     <p><a href="">Login with Twitter</a></p>
 </form>

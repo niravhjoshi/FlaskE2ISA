@@ -1,8 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
 
+
 <div class="col-md-4">
- <h1>E2ISA Person Add/View</h1>
-{{ table }}
+ <h1>E2ISA Persons List:</h1>
+
+
+<table class="table table-striped">
+<tr>
+
+<th>PersonName</th>
+    <th>BirthDate</th>
+<th>Sex</th>
+    <th>Edit</th>
+</tr>
+{% for person in viewper %}
+    <form class="form-inline" action="/addEPES/EditPersons">
+<tr>
+    <input type="text" name="person_id" value="{{person.id}}" hidden>
+    <td>{{person.per_name}}</td>
+    <td>{{person.per_bdate}}</td>
+    <td>{{person.per_sex}}</td>
+    <td><input type="submit" value="Edit" class="form-control"></td>
+</tr>
+    </form>
+{% endfor %}
+</table>
+
 </div>
 {% endblock %}

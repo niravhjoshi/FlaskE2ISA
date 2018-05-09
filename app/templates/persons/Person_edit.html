@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="col-md-4">
+ <h1>E2ISA Edit Persons</h1>
+ <form action="" method="post">
+        {{ form.hidden_tag() }}
+     <p>        {{ form.Person_Name.label }}<br>
+            {{ form.Person_Name(size=32,class='form-control') }}<br>
+            {% for error in form.Person_Name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+     <p>
+            {{ form.Per_Sex.label }}<br>
+            {{ form.Per_Sex(size=10) }}<br>
+            {% for error in form.Per_Sex.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.Per_Bdate.label }}<br>
+            {{ form.Per_Bdate(class='datepicker') }}<br>
+            {% for error in form.Per_Bdate.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>{{ form.submit(class='btn btn-primary') }}</p>
+
+    </form>
+</div>
+{% endblock %}

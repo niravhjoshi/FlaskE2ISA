@@ -29,7 +29,7 @@ def login():
 @bp.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
 
 #This Decorator function is for creating user
 @bp.route('/register', methods=['GET', 'POST'])

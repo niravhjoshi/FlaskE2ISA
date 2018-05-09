@@ -7,6 +7,9 @@ from datetime import datetime
 from app.addEPES import bp
 from app.tables.personTable import PersonResults
 from app.models.Person_model import Persons
+from flask_login import login_user,logout_user,current_user
+from forms import PersonsAddEntryForm,PersonEditForm
+import dateutil.parser
 
 #This deocrator function will ensure that if page is served it must have authenticated users
 @app.before_request
@@ -19,18 +22,47 @@ def before_request():
 @bp.route('/addEPES/addPersons',methods =['GET','POST'])
 @login_required
 def addPersonNames():
-    pass
+    form =PersonsAddEntryForm()
+    if form.validate_on_submit():
+        person = Persons(u_id=current_user.id,per_name = form.Person_Name.data,per_bdate=form.Per_Bdate.data,per_sex=form.Per_Sex.data)
+        db.session.add(person)
+        db.session.commit()
+        flash("Person Name is saved")
+        return redirect(url_for('addEPES.ListPersons'))
+    return render_template('persons/person_Add.html', title='Add Person', form=form)
+
+
 #This function will  show currently added person into DB it can show you grid to edit it.
-@bp.route('/addEPES/EditPersons',methods =['GET','POST'])
+@bp.route('/addEPES/ListPersons',methods =['GET','POST'])
+@login_required
+def ListPersons():
+    persons = Persons.query.filter_by(u_id=current_user.id).all()
+    return render_template('persons/person_addView.html', viewper=persons)
+
+
+@bp.route('/addEPES/EditPersons',methods=['GET','POST'])
 @login_required
 def EditPersonsNames():
-    personresults=[]
-    personresults = Persons.query.all()
-    if not personresults:
-        flash("We are sorry there are no persons in table please add it.")
-        return redirect('/')
-    else:
-        #display results in table
-        table = PersonResults(personresults)
-        table.border = True
-        return render_template('persons/person_addView.html',table=table)
+        personid = request.args.get("person_id")
+        person = Persons.query.get_or_404(personid)
+        form = PersonEditForm()
+        if form.validate_on_submit():
+            person.per_name = form.Person_Name.data
+            person.per_sex = form.Per_Sex.data
+            person.per_bdate = form.Per_Bdate.data
+            db.session.commit()
+            flash('Your changes have been saved.')
+            return redirect(url_for('addEPES.ListPersons'))
+        elif request.method == 'GET':
+            form.Person_Name.data =person.per_name
+            form.Per_Sex.data =person.per_sex
+            form.Per_Bdate.data =person.per_bdate
+        return render_template('persons/Person_edit.html', form=form)
+
+
+
+
+@bp.route('/addEPES/DeletePersons',methods=['GET','POST'])
+@login_required
+def DeletePersonNames():
+    pass
