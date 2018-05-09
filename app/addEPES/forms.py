@@ -18,3 +18,4 @@ class PersonEditForm(FlaskForm):
     Per_Sex = RadioField('Person Sex:', choices=[('M', 'Male'), ('F', "Female"), ('O', "Other")],validators=[DataRequired(), ])
     Per_Bdate = DateField('Person BirthDate:-', format='%Y-%m-%d', validators=[DataRequired()])
     submit = SubmitField('Submit')
+    Delete = SubmitField('Delete')

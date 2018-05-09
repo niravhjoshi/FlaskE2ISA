@@ -57,12 +57,20 @@ def EditPersonsNames():
             form.Person_Name.data =person.per_name
             form.Per_Sex.data =person.per_sex
             form.Per_Bdate.data =person.per_bdate
-        return render_template('persons/Person_edit.html', form=form)
+        return render_template('persons/Person_edit.html', form=form,per=person)
 
 
 
 
-@bp.route('/addEPES/DeletePersons',methods=['GET','POST'])
+@bp.route('/addEPES/DeletePerson',methods=['GET','POST'])
 @login_required
 def DeletePersonNames():
-    pass
+    personid = request.args.get("person_id")
+    delper=Persons.query.filter_by(id=personid).first()
+    try:
+        db.session.delete(delper)
+        db.session.commit()
+        return redirect(url_for('addEPES.ListPersons'))
+    except Exception as e:
+        flash('There was Exception Person cannot be delete he/she may some records in tables.')
+        return redirect(url_for('addEPES.ListPersons'))
