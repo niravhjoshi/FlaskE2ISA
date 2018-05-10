@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% block content %}
-
+{% block app_content %}
 <div class="col-md-4">
  <h1>E2ISA Edit Persons</h1>
- <form class="form-inline" action="/addEPES/DeletePerson">
+ <form class="form-inline" method="post">
   {{ form.csrf_token }}
+{{ form.hidden_tag() }}
  <input type="text" name="person_id" value="{{per.id}}" hidden>
-  {{ form.hidden_tag() }}
+
      <p>    {{ form.Person_Name.label }}<br>
             {{ form.Person_Name(size=32,class='form-control') }}<br>
             {% for error in form.Person_Name.errors %}
@@ -27,10 +27,15 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-<p>{{ form.submit(class='btn btn-primary') }}
-{{ form.Delete(class='btn btn-primary') }}
-
-</p>
+     <p>{{ form.submit(class='btn btn-primary') }}</p>
     </form>
+      <form class="form-inline" action="/addEPES/DeletePerson">
+   {{ form.csrf_token }}
+  <input type="text" name="person_id" value="{{per.id}}" hidden>
+
+{{ form.Delete(class='btn btn-primary') }}
+</form>
+
+
 </div>
 {% endblock %}

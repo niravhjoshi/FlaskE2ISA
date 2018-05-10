@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{% block content %}
-
+{% block app_content %}
 
 
 <div class="col-md-4">
@@ -28,4 +27,5 @@
 </form>
 <p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
 </div>
+
 {% endblock %}

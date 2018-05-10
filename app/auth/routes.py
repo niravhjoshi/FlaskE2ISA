@@ -20,7 +20,7 @@ def login():
         user = User.query.filter_by(email=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid Login Name or Password')
-            return redirect(url_for('login'))
+            return redirect(url_for('auth.login'))
         login_user(user,remember=form.remember_me.data)
         return redirect(url_for('main.index'))
     return  render_template('auth/login.html',title='E2ISA Login Here',form=form)

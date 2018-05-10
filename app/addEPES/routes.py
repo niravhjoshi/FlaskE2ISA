@@ -46,6 +46,7 @@ def EditPersonsNames():
         personid = request.args.get("person_id")
         person = Persons.query.get_or_404(personid)
         form = PersonEditForm()
+        meth = request.method
         if form.validate_on_submit():
             person.per_name = form.Person_Name.data
             person.per_sex = form.Per_Sex.data
@@ -70,6 +71,7 @@ def DeletePersonNames():
     try:
         db.session.delete(delper)
         db.session.commit()
+        flash("Person Deleted")
         return redirect(url_for('addEPES.ListPersons'))
     except Exception as e:
         flash('There was Exception Person cannot be delete he/she may some records in tables.')
