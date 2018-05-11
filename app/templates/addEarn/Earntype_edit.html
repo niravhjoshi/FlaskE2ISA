@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block app_content %}
+<div class="col-md-4">
+ <h1>E2ISA Edit Earning Types</h1>
+ <form class="form-inline" method="post">
+  {{ form.csrf_token }}
+{{ form.hidden_tag() }}
+ <input type="text" name="earn_id" value="{{Ear.id}}" hidden>
+
+     <p>    {{ form.Earn_Type.label }}<br>
+            {{ form.Earn_Type(size=32,class='form-control') }}<br>
+            {% for error in form.Earn_Type.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+     <p>{{ form.submit(class='btn btn-primary') }}</p>
+    </form>
+      <form class="form-inline" action="/addEarnType/DeleteEarnType">
+   {{ form.csrf_token }}
+  <input type="text" name="earn_id" value="{{Ear.id}}" hidden>
+
+{{ form.Delete(class='btn btn-primary') }}
+</form>
+
+
+</div>
+{% endblock %}

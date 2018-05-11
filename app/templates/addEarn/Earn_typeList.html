@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+<div class="col-md-4">
+ <h1>E2ISA Earnings Type List:</h1>
+<table class="table table-striped">
+<tr>
+<th>Earning Type</th>
+    <th>Edit</th>
+</tr>
+{% for earntypes in vieweartype %}
+    <form class="form-inline" action="/addEarnType/EditEarnType">
+<tr>
+    <input type="text" name="earn_id" value="{{earntypes.id}}" hidden>
+    <td>{{earntypes.EarType_name}}</td>
+    <td><input type="submit" value="Edit" class="form-control"></td>
+</tr>
+ </form>
+{% endfor %}
+</table>
+
+</div>
+{% endblock %}

@@ -5,7 +5,6 @@ from flask_login import current_user, login_user,logout_user,login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
 from app.addEPES import bp
-from app.tables.personTable import PersonResults
 from app.models.Person_model import Persons
 from flask_login import login_user,logout_user,current_user
 from forms import PersonsAddEntryForm,PersonEditForm

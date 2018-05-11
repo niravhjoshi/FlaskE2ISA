@@ -37,15 +37,15 @@ if not app.debug:
 #Error loging to Error log file
     if not os.path.exists('logs'):
         os.mkdir('logs')
-    file_handler = RotatingFileHandler('logs/microblog.log', maxBytes=10240,
+    file_handler = RotatingFileHandler('logs/E2ISA_log.log', maxBytes=10240,
                                        backupCount=10)
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
-    file_handler.setLevel(logging.INFO)
+    file_handler.setLevel(logging.DEBUG)
     app.logger.addHandler(file_handler)
 
-    app.logger.setLevel(logging.INFO)
-    app.logger.info('Microblog startup')
+    app.logger.setLevel(logging.DEBUG)
+    app.logger.info('E2ISA App startup')
 
 
 from app import routes,errors
@@ -70,3 +70,9 @@ from app.main import bp as main
 app.register_blueprint(main)
 from app.addEPES import bp as addEPES
 app.register_blueprint(addEPES)
+from app.addEarnType import bp as addEarnType
+app.register_blueprint(addEarnType)
+from app.addExpType import bp as addExpType
+app.register_blueprint(addExpType)
+from app.addExpType import bp as addExpType
+app.register_blueprint(addExpType)
