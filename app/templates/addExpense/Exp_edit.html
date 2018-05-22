@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block app_content %}
+<div class="col-md-4">
+ <h1>E2ISA Edit Expense Types</h1>
+ <form class="form-inline" method="post">
+  {{ form.csrf_token }}
+{{ form.hidden_tag() }}
+ <input type="text" name="exp_id" value="{{Exp.id}}" hidden>
+
+     <p>    {{ form.Exp_Type.label }}<br>
+            {{ form.Exp_Type(size=32,class='form-control') }}<br>
+            {% for error in form.Exp_Type.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+     <p>{{ form.submit(class='btn btn-primary') }}</p>
+    </form>
+      <form class="form-inline" action="/addExpType/DeleteExpType">
+   {{ form.csrf_token }}
+  <input type="text" name="exp_id" value="{{Exp.id}}" hidden>
+
+{{ form.Delete(class='btn btn-primary') }}
+</form>
+
+
+</div>
+{% endblock %}

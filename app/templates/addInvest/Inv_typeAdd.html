@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+<div class="col-md-4">
+ <h1>E2ISA Investment Type Add:</h1>
+ <form action="" method="post">
+<table class="table table-striped">
+{{ form.hidden_tag() }}
+ <p>        {{ form.Inv_Type.label }}<br>
+            {{ form.Inv_Type(size=32,class='form-control') }}<br>
+            {% for error in form.Inv_Type.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>{{ form.submit(class='btn btn-primary') }}</p>
+</table>
+ </form>
+
+</div>
+{% endblock %}

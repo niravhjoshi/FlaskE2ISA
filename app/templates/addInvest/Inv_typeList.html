@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+<div class="col-md-4">
+ <h1>E2ISA Expense Type List:</h1>
+<table class="table table-striped">
+<tr>
+<th>Investment Type</th>
+    <th>Edit</th>
+</tr>
+{% for invtypes in viewinvtype %}
+    <form class="form-inline" action="/addInvType/EditInvTypes">
+<tr>
+    <input type="text" name="inv_id" value="{{invtypes.id}}" hidden>
+    <td>{{invtypes.InvType_name}}</td>
+    <td><input type="submit" value="Edit" class="form-control"></td>
+</tr>
+ </form>
+{% endfor %}
+</table>
+
+</div>
+{% endblock %}

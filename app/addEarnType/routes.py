@@ -7,7 +7,7 @@ from app.addEarnType import bp
 from app.models.Eartype_model import EarType
 from flask_login import login_user,logout_user,current_user
 from forms import EntryEarnTypeForm,EditEarnTypeForm
-import dateutil.parser
+
 
 
 #This deocrator function will ensure that if page is served it must have authenticated users

@@ -74,5 +74,5 @@ from app.addEarnType import bp as addEarnType
 app.register_blueprint(addEarnType)
 from app.addExpType import bp as addExpType
 app.register_blueprint(addExpType)
-from app.addExpType import bp as addExpType
-app.register_blueprint(addExpType)
+from app.addInvType import bp as addInvType
+app.register_blueprint(addInvType)

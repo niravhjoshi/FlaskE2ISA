@@ -11,7 +11,7 @@ class EntryInvTypeForm(FlaskForm):
 
 #This will be edit Expense Type form in UI may be delete entry.
 class EditInvTypeForm(FlaskForm):
-    Exp_Type = StringField('Investment Type:-', validators=[DataRequired(), Length(min=1, max=56)])
+    Inv_Type = StringField('Investment Type:-', validators=[DataRequired(), Length(min=1, max=56)])
     submit = SubmitField('Save')
     Delete = SubmitField('Delete')
 
