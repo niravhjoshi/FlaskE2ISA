@@ -3,18 +3,19 @@
 
 <div class="col-md-4">
  <h1>E2ISA Earning Add</h1>
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
 {{ form.hidden_tag() }}
+{{ form.csrf_token }}
 <p>
-{{ form.Ear_per_name.label }}<br>
-{{ form.Ear_per_name }}
+Select Person Name:<br>
+{{ form.Ear_per_name(class='btn btn-secondary dropdown-toggle')}}
 {% for error in form.Ear_type_name.errors %}
 <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
 </p>
 <p>
-{{ form.Ear_type_name.label }}<br>
-{{ form.Ear_type_name }}
+Select Earning Type:<br>
+{{ form.Ear_type_name(class='btn btn-secondary dropdown-toggle')}}
     {% for error in form.Ear_type_name.errors %}
 <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
@@ -22,7 +23,7 @@
 
 <p>
 {{ form.Ear_amt.label }}<br>
-{{ form.Ear_amt(size=32) }}
+{{ form.Ear_amt(size=32,class='form-control') }}
     {% for error in form.Ear_amt.errors %}
 <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
@@ -30,7 +31,7 @@
 
 <p>
 {{ form.Ear_date.label }}<br>
-{{ form.Ear_date }}
+{{ form.Ear_date(class='datepicker') }}
     {% for error in form.Ear_date.errors %}
 <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
@@ -38,14 +39,14 @@
 
 <p>
 {{ form.Ear_img.label }}<br>
-{{ form.Ear_img }}
+{{ form.Ear_img (class='form-control')}}
     {% for error in form.Ear_img.errors %}
 <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
 </p>
     <p>
 {{ form.Ear_comm.label }}<br>
-{{ form.Ear_comm }}
+{{ form.Ear_comm (class='form-control') }}
     {% for error in form.Ear_comm.errors %}
 <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
@@ -53,7 +54,7 @@
 
 
 
-<p>{{ form.submit() }}</p>
+<p>{{ form.submit(class='btn btn-primary') }}</p>
 </form>
 </div>
 {% endblock %}

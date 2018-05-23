@@ -19,5 +19,6 @@ class Persons(db.Model):
     Investor = db.relationship('Investments', backref='investor', lazy='dynamic')
     Expensor = db.relationship('Expenses', backref='expensor', lazy='dynamic')
     Earner = db.relationship('Earnings', backref='earner', lazy='dynamic')
+
     def __repr__(self):
-        return '<PerName {}>'.format(self.per_name)
+        return '{}'.format(self.per_name)

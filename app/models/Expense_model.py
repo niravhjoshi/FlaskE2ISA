@@ -14,6 +14,8 @@ class Expenses(db.Model):
     Exp_per_name = db.Column(db.String(64), index=True)
     Exp_type_name = db.Column(db.String(100),index=True)
     Exp_amt = db.Column(db.Float)
+    Exp_img = db.Column(db.Binary)
+    Exp_FileName = db.Column(db.String(300))
     Exp_date = db.Column(db.DateTime,index=True)
     Exp_comm = db.Column(db.String(200))
 

@@ -18,6 +18,7 @@ class Shares(db.Model):
     Share_pershare_amt =db.Column(db.Float)
     Share_inv_sell_date = db.Column(db.DateTime,index=True)
     Share_img = db.Column(db.Binary)
+    Share_FileName = db.Column(db.String(300))
     Share_comm = db.Column(db.String(200))
 
     def share_get_url(self):

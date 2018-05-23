@@ -14,6 +14,7 @@ class Investments(db.Model):
     Inv_type_name = db.Column(db.String(100),index=True)
     Inv_init_amt = db.Column(db.Float)
     Inv_mat_amt = db.Column(db.Float)
+    Inv_ROI_PerYear = db.Column(db.Float)
     Inv_date = db.Column(db.DateTime,index=True)
     Inv_mat_date = db.Column(db.DateTime,index=True)
     Inv_due_date = db.Column(db.DateTime,index=True)

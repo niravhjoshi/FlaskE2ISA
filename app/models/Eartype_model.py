@@ -13,4 +13,4 @@ class EarType(db.Model):
     EarType_cdate = db.Column(db.DateTime, default=datetime.utcnow())
 
     def __repr__(self):
-        return '<EarType {}>'.format(self.EarType_name)
+        return '{}'.format(self.EarType_name)

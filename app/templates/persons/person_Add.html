@@ -7,7 +7,7 @@
 <table class="table table-striped">
 {{ form.hidden_tag() }}
  <p>        {{ form.Person_Name.label }}<br>
-            {{ form.Person_Name(size=32,class='form-control') }}<br>
+            {{ form.Person_Name(size=32,class='dropdown') }}<br>
             {% for error in form.Person_Name.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}

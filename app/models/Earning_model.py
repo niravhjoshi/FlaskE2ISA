@@ -16,6 +16,7 @@ class Earnings(db.Model):
     Ear_amt = db.Column(db.Float)
     Ear_date = db.Column(db.DateTime,index=True)
     Ear_img = db.Column(db.Binary)
+    Ear_FileName = db.Column(db.String(300))
     Ear_comm = db.Column(db.String(200))
 
     def ear_get_url(self):
