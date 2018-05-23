@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+<div class="col-md-4">
+ <h1>E2ISA Earning List</h1>
+<table class="table table-striped">
+<tr>
+
+<th>Earner Name</th>
+    <th>Earning Type</th>
+<th>Earning Amount</th>
+    <th>Earning Date</th>
+    <th>Earning Download File</th>
+    <th>Earning Comment</th>
+    <th>Earning File Dump</th>
+</tr>
+    {% for earn in viewearn %}
+    <form class="form-inline" action="/earnings/edit_earn">
+<tr>
+    <input type="text" name="earn_id" value="{{earn.id}}" hidden>
+    <td>{{earn.Ear_per_name}}</td>
+    <td>{{earn.Ear_type_name}}</td>
+    <td>{{earn.Ear_amt}}</td>
+    <td>{{earn.Ear_date}}</td>
+    {% if earn.Ear_FileName==None  %}
+    <td></td>
+    {% else %}
+    <td><a href="{{ url_for('earnings.earn_download',id=earn.id) }}" target='_blank'>{{ earn.Ear_FileName }}</a></td>
+    {% endif %}
+    <td>{{earn.Ear_comm}}</td>
+    <td><input type="submit" value="Edit" class="form-control"></td>
+</tr>
+ </form>
+{% endfor %}
+</table>
+</div>
+{% endblock %}

@@ -3,7 +3,7 @@ from app import db
 from datetime import datetime
 from flask import url_for, current_app
 from app.utils.exceptions import ValidationError
-
+from sqlalchemy.dialects.mysql import LONGBLOB
 
 #This is model defination for the Expnese Table and its api calls with get post put all covered in here.
 class Expenses(db.Model):
@@ -14,7 +14,7 @@ class Expenses(db.Model):
     Exp_per_name = db.Column(db.String(64), index=True)
     Exp_type_name = db.Column(db.String(100),index=True)
     Exp_amt = db.Column(db.Float)
-    Exp_img = db.Column(db.Binary)
+    Exp_img = db.Column(db.LargeBinary)
     Exp_FileName = db.Column(db.String(300))
     Exp_date = db.Column(db.DateTime,index=True)
     Exp_comm = db.Column(db.String(200))

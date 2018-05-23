@@ -1,5 +1,5 @@
 from app import app,db
-from flask import render_template,flash, redirect, url_for, request
+from flask import render_template,flash, redirect, url_for, request,send_file
 from app.earnings.forms import EarningEntryForm
 from flask_login import current_user, login_user,logout_user,login_required
 from werkzeug.urls import url_parse
@@ -9,7 +9,8 @@ from ..models.Earning_model import Earnings
 from ..models.Person_model import Persons
 from ..models.Eartype_model import EarType
 from app.earnings import bp
-
+from base64 import b64encode
+from io import BytesIO
 #This deocrator function will ensure that if page is served it must have authenticated users
 @app.before_request
 def before_request():
@@ -23,7 +24,6 @@ def before_request():
 @bp.route('/earnings/add_earn', methods=['GET', 'POST'])
 @login_required
 def earn_add():
-
     form = EarningEntryForm()
     meth = request.method
     if form.validate_on_submit():
@@ -35,6 +35,23 @@ def earn_add():
         db.session.add(earningRow)
         db.session.commit()
         flash("Earning Entry and file has been Saved Fine")
-        return render_template('earning/earn_add.html',form=form)
-
+        return redirect(url_for('earnings.list_earning'))
     return render_template('earning/earn_add.html', title='Add Earning', form=form)
+
+@bp.route('/earnings/list_earn',methods=['GET','POST'])
+@login_required
+def list_earning():
+    earnings = Earnings.query.filter_by(Per_id=current_user.id).all()
+    return render_template('earning/earn_List.html', viewearn=earnings)
+
+
+@bp.route('/earnings/download<int:id>',methods=['GET'])
+@login_required
+def earn_download(id):
+    earnings = Earnings.query.get_or_404(id)
+    return send_file(BytesIO(earnings.Ear_img),attachment_filename=earnings.Ear_FileName)
+
+@bp.route('/earnings/edit_earn',methods=['GET','POST'])
+@login_required
+def edit_earn():
+    pass

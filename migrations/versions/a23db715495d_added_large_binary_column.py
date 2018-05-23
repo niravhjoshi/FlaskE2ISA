@@ -1,8 +1,8 @@
-"""New DB seed
+"""added large Binary Column
 
-Revision ID: c0e2529f8090
+Revision ID: a23db715495d
 Revises: 
-Create Date: 2018-04-24 19:15:27.528000
+Create Date: 2018-05-23 21:03:31.282000
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c0e2529f8090'
+revision = 'a23db715495d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -78,7 +78,8 @@ def upgrade():
     sa.Column('Ear_type_name', sa.String(length=100), nullable=True),
     sa.Column('Ear_amt', sa.Float(), nullable=True),
     sa.Column('Ear_date', sa.DateTime(), nullable=True),
-    sa.Column('Ear_img', sa.Binary(), nullable=True),
+    sa.Column('Ear_img', sa.LargeBinary(), nullable=True),
+    sa.Column('Ear_FileName', sa.String(length=300), nullable=True),
     sa.Column('Ear_comm', sa.String(length=200), nullable=True),
     sa.ForeignKeyConstraint(['Per_id'], ['Persons.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -92,6 +93,8 @@ def upgrade():
     sa.Column('Exp_per_name', sa.String(length=64), nullable=True),
     sa.Column('Exp_type_name', sa.String(length=100), nullable=True),
     sa.Column('Exp_amt', sa.Float(), nullable=True),
+    sa.Column('Exp_img', sa.LargeBinary(), nullable=True),
+    sa.Column('Exp_FileName', sa.String(length=300), nullable=True),
     sa.Column('Exp_date', sa.DateTime(), nullable=True),
     sa.Column('Exp_comm', sa.String(length=200), nullable=True),
     sa.ForeignKeyConstraint(['per_id'], ['Persons.id'], ),
@@ -107,10 +110,11 @@ def upgrade():
     sa.Column('Inv_type_name', sa.String(length=100), nullable=True),
     sa.Column('Inv_init_amt', sa.Float(), nullable=True),
     sa.Column('Inv_mat_amt', sa.Float(), nullable=True),
+    sa.Column('Inv_ROI_PerYear', sa.Float(), nullable=True),
     sa.Column('Inv_date', sa.DateTime(), nullable=True),
     sa.Column('Inv_mat_date', sa.DateTime(), nullable=True),
     sa.Column('Inv_due_date', sa.DateTime(), nullable=True),
-    sa.Column('Inv_img', sa.Binary(), nullable=True),
+    sa.Column('Inv_img', sa.LargeBinary(), nullable=True),
     sa.Column('Inv_comm', sa.String(length=200), nullable=True),
     sa.ForeignKeyConstraint(['per_id'], ['Persons.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -129,7 +133,8 @@ def upgrade():
     sa.Column('Share_tran_type', sa.String(length=50), nullable=True),
     sa.Column('Share_pershare_amt', sa.Float(), nullable=True),
     sa.Column('Share_inv_sell_date', sa.DateTime(), nullable=True),
-    sa.Column('Share_img', sa.Binary(), nullable=True),
+    sa.Column('Share_img', sa.LargeBinary(), nullable=True),
+    sa.Column('Share_FileName', sa.String(length=300), nullable=True),
     sa.Column('Share_comm', sa.String(length=200), nullable=True),
     sa.ForeignKeyConstraint(['per_id'], ['Persons.id'], ),
     sa.PrimaryKeyConstraint('id')

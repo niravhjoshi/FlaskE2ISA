@@ -17,7 +17,7 @@ class Shares(db.Model):
     Share_tran_type = db.Column(db.String(50),index=True)
     Share_pershare_amt =db.Column(db.Float)
     Share_inv_sell_date = db.Column(db.DateTime,index=True)
-    Share_img = db.Column(db.Binary)
+    Share_img = db.Column(db.LargeBinary)
     Share_FileName = db.Column(db.String(300))
     Share_comm = db.Column(db.String(200))
 

@@ -15,7 +15,7 @@ class Earnings(db.Model):
     Ear_type_name = db.Column(db.String(100),index=True)
     Ear_amt = db.Column(db.Float)
     Ear_date = db.Column(db.DateTime,index=True)
-    Ear_img = db.Column(db.Binary)
+    Ear_img = db.Column(db.LargeBinary)
     Ear_FileName = db.Column(db.String(300))
     Ear_comm = db.Column(db.String(200))
 

@@ -18,7 +18,7 @@ class Investments(db.Model):
     Inv_date = db.Column(db.DateTime,index=True)
     Inv_mat_date = db.Column(db.DateTime,index=True)
     Inv_due_date = db.Column(db.DateTime,index=True)
-    Inv_img = db.Column(db.Binary)
+    Inv_img = db.Column(db.LargeBinary)
     Inv_comm = db.Column(db.String(200))
 
     def inv_get_url(self):
