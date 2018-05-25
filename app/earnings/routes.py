@@ -28,7 +28,8 @@ def earn_add():
     meth = request.method
     if form.validate_on_submit():
         #file_upld = request.files()
-        earningRow = Earnings(Per_id=current_user.id,Ear_per_name=str(form.Ear_per_name.data),
+        per_id = Persons.query.filter_by(u_id=current_user.id , per_name=str(form.Ear_per_name.data)).all()
+        earningRow = Earnings(Per_id=per_id[0].id,U_id=current_user.id,Ear_per_name=str(form.Ear_per_name.data),
                               Ear_type_name=str(form.Ear_type_name.data),Ear_amt=form.Ear_amt.data,
                               Ear_date=form.Ear_date.data,Ear_FileName=form.Ear_img.data.filename,
                               Ear_img=form.Ear_img.data.read(),Ear_comm=form.Ear_comm.data)
@@ -41,15 +42,21 @@ def earn_add():
 @bp.route('/earnings/list_earn',methods=['GET','POST'])
 @login_required
 def list_earning():
-    earnings = Earnings.query.filter_by(Per_id=current_user.id).all()
+    earnings = Earnings.query.filter_by(U_id=current_user.id).all()
     return render_template('earning/earn_List.html', viewearn=earnings)
+
 
 
 @bp.route('/earnings/download<int:id>',methods=['GET'])
 @login_required
 def earn_download(id):
-    earnings = Earnings.query.get_or_404(id)
-    return send_file(BytesIO(earnings.Ear_img),attachment_filename=earnings.Ear_FileName)
+    perid = request.args.get("perID")
+
+    #newearn = Earnings.query.get_or_404(perid,id)
+    earnings = Earnings.query.filter_by(Per_id=perid , U_id=current_user.id).all()
+    filebuff = earnings[0].Ear_img
+    filename = earnings[0].Ear_FileName
+    return send_file(BytesIO(filebuff),attachment_filename=filename)
 
 @bp.route('/earnings/edit_earn',methods=['GET','POST'])
 @login_required

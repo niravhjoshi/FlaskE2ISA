@@ -22,15 +22,20 @@
     <td>{{earn.Ear_type_name}}</td>
     <td>{{earn.Ear_amt}}</td>
     <td>{{earn.Ear_date}}</td>
+    <td>{{earn.Ear_comm}}</td>
+    <td><input type="submit" value="Edit" class="form-control"></td>
+</form>
+<form class="form-inline" action="{{ url_for('earnings.earn_download',id=earn.id) }}">
+    <input type="text" name="perID" value="{{earn.Per_id}}" hidden>
     {% if earn.Ear_FileName==None  %}
     <td></td>
     {% else %}
-    <td><a href="{{ url_for('earnings.earn_download',id=earn.id) }}" target='_blank'>{{ earn.Ear_FileName }}</a></td>
+    <td><input type="submit" value="Download File" formtarget="_blank" class="form-control"></td>
     {% endif %}
-    <td>{{earn.Ear_comm}}</td>
-    <td><input type="submit" value="Edit" class="form-control"></td>
+
+</form>
 </tr>
- </form>
+
 {% endfor %}
 </table>
 </div>

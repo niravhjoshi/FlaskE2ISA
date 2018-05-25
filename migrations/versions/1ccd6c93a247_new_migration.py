@@ -1,8 +1,8 @@
-"""added large Binary Column
+"""New Migration
 
-Revision ID: a23db715495d
+Revision ID: 1ccd6c93a247
 Revises: 
-Create Date: 2018-05-23 21:03:31.282000
+Create Date: 2018-05-24 19:26:31.497000
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a23db715495d'
+revision = '1ccd6c93a247'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -74,6 +74,7 @@ def upgrade():
     op.create_table('Earnings',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('Per_id', sa.Integer(), nullable=False),
+    sa.Column('U_id', sa.Integer(), nullable=False),
     sa.Column('Ear_per_name', sa.String(length=64), nullable=True),
     sa.Column('Ear_type_name', sa.String(length=100), nullable=True),
     sa.Column('Ear_amt', sa.Float(), nullable=True),
@@ -82,14 +83,17 @@ def upgrade():
     sa.Column('Ear_FileName', sa.String(length=300), nullable=True),
     sa.Column('Ear_comm', sa.String(length=200), nullable=True),
     sa.ForeignKeyConstraint(['Per_id'], ['Persons.id'], ),
+    sa.ForeignKeyConstraint(['U_id'], ['Users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_Earnings_Ear_date'), 'Earnings', ['Ear_date'], unique=False)
     op.create_index(op.f('ix_Earnings_Ear_per_name'), 'Earnings', ['Ear_per_name'], unique=False)
     op.create_index(op.f('ix_Earnings_Ear_type_name'), 'Earnings', ['Ear_type_name'], unique=False)
+    op.create_index(op.f('ix_Earnings_U_id'), 'Earnings', ['U_id'], unique=False)
     op.create_table('Expesnes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('per_id', sa.Integer(), nullable=False),
+    sa.Column('U_id', sa.Integer(), nullable=False),
     sa.Column('Exp_per_name', sa.String(length=64), nullable=True),
     sa.Column('Exp_type_name', sa.String(length=100), nullable=True),
     sa.Column('Exp_amt', sa.Float(), nullable=True),
@@ -97,15 +101,18 @@ def upgrade():
     sa.Column('Exp_FileName', sa.String(length=300), nullable=True),
     sa.Column('Exp_date', sa.DateTime(), nullable=True),
     sa.Column('Exp_comm', sa.String(length=200), nullable=True),
+    sa.ForeignKeyConstraint(['U_id'], ['Users.id'], ),
     sa.ForeignKeyConstraint(['per_id'], ['Persons.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_Expesnes_Exp_date'), 'Expesnes', ['Exp_date'], unique=False)
     op.create_index(op.f('ix_Expesnes_Exp_per_name'), 'Expesnes', ['Exp_per_name'], unique=False)
     op.create_index(op.f('ix_Expesnes_Exp_type_name'), 'Expesnes', ['Exp_type_name'], unique=False)
+    op.create_index(op.f('ix_Expesnes_U_id'), 'Expesnes', ['U_id'], unique=False)
     op.create_table('Investments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('per_id', sa.Integer(), nullable=False),
+    sa.Column('U_id', sa.Integer(), nullable=False),
     sa.Column('Inv_per_name', sa.String(length=64), nullable=True),
     sa.Column('Inv_type_name', sa.String(length=100), nullable=True),
     sa.Column('Inv_init_amt', sa.Float(), nullable=True),
@@ -116,6 +123,7 @@ def upgrade():
     sa.Column('Inv_due_date', sa.DateTime(), nullable=True),
     sa.Column('Inv_img', sa.LargeBinary(), nullable=True),
     sa.Column('Inv_comm', sa.String(length=200), nullable=True),
+    sa.ForeignKeyConstraint(['U_id'], ['Users.id'], ),
     sa.ForeignKeyConstraint(['per_id'], ['Persons.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -124,9 +132,11 @@ def upgrade():
     op.create_index(op.f('ix_Investments_Inv_mat_date'), 'Investments', ['Inv_mat_date'], unique=False)
     op.create_index(op.f('ix_Investments_Inv_per_name'), 'Investments', ['Inv_per_name'], unique=False)
     op.create_index(op.f('ix_Investments_Inv_type_name'), 'Investments', ['Inv_type_name'], unique=False)
+    op.create_index(op.f('ix_Investments_U_id'), 'Investments', ['U_id'], unique=False)
     op.create_table('Shares',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('per_id', sa.Integer(), nullable=False),
+    sa.Column('U_id', sa.Integer(), nullable=False),
     sa.Column('Share_per_name', sa.String(length=64), nullable=True),
     sa.Column('Share_tick_name', sa.String(length=100), nullable=True),
     sa.Column('Share_Count', sa.Float(), nullable=True),
@@ -136,6 +146,7 @@ def upgrade():
     sa.Column('Share_img', sa.LargeBinary(), nullable=True),
     sa.Column('Share_FileName', sa.String(length=300), nullable=True),
     sa.Column('Share_comm', sa.String(length=200), nullable=True),
+    sa.ForeignKeyConstraint(['U_id'], ['Users.id'], ),
     sa.ForeignKeyConstraint(['per_id'], ['Persons.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -143,26 +154,31 @@ def upgrade():
     op.create_index(op.f('ix_Shares_Share_per_name'), 'Shares', ['Share_per_name'], unique=False)
     op.create_index(op.f('ix_Shares_Share_tick_name'), 'Shares', ['Share_tick_name'], unique=False)
     op.create_index(op.f('ix_Shares_Share_tran_type'), 'Shares', ['Share_tran_type'], unique=False)
+    op.create_index(op.f('ix_Shares_U_id'), 'Shares', ['U_id'], unique=False)
     # ### end Alembic commands ###
 
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_index(op.f('ix_Shares_U_id'), table_name='Shares')
     op.drop_index(op.f('ix_Shares_Share_tran_type'), table_name='Shares')
     op.drop_index(op.f('ix_Shares_Share_tick_name'), table_name='Shares')
     op.drop_index(op.f('ix_Shares_Share_per_name'), table_name='Shares')
     op.drop_index(op.f('ix_Shares_Share_inv_sell_date'), table_name='Shares')
     op.drop_table('Shares')
+    op.drop_index(op.f('ix_Investments_U_id'), table_name='Investments')
     op.drop_index(op.f('ix_Investments_Inv_type_name'), table_name='Investments')
     op.drop_index(op.f('ix_Investments_Inv_per_name'), table_name='Investments')
     op.drop_index(op.f('ix_Investments_Inv_mat_date'), table_name='Investments')
     op.drop_index(op.f('ix_Investments_Inv_due_date'), table_name='Investments')
     op.drop_index(op.f('ix_Investments_Inv_date'), table_name='Investments')
     op.drop_table('Investments')
+    op.drop_index(op.f('ix_Expesnes_U_id'), table_name='Expesnes')
     op.drop_index(op.f('ix_Expesnes_Exp_type_name'), table_name='Expesnes')
     op.drop_index(op.f('ix_Expesnes_Exp_per_name'), table_name='Expesnes')
     op.drop_index(op.f('ix_Expesnes_Exp_date'), table_name='Expesnes')
     op.drop_table('Expesnes')
+    op.drop_index(op.f('ix_Earnings_U_id'), table_name='Earnings')
     op.drop_index(op.f('ix_Earnings_Ear_type_name'), table_name='Earnings')
     op.drop_index(op.f('ix_Earnings_Ear_per_name'), table_name='Earnings')
     op.drop_index(op.f('ix_Earnings_Ear_date'), table_name='Earnings')
