@@ -54,9 +54,9 @@ def EditPersonsNames():
             flash('Your changes have been saved.')
             return redirect(url_for('addEPES.ListPersons'))
         elif request.method == 'GET':
-            form.Person_Name.data =person.per_name
-            form.Per_Sex.data =person.per_sex
-            form.Per_Bdate.data =person.per_bdate
+            form.Person_Name.data = person.per_name
+            form.Per_Sex.data = person.per_sex
+            form.Per_Bdate.data = person.per_bdate
         return render_template('persons/Person_edit.html', form=form,per=person)
 
 

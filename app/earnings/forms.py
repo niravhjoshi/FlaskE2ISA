@@ -11,18 +11,34 @@ from flask_login import current_user, login_user,logout_user,login_required
 from app import app,db
 # This form will insert earnings into database
 
+'''
 def choice_pername():
     return Persons.query.filter_by(u_id=current_user.id)
     #return Persons.query.with_entities(Persons.per_name).filter_by(u_id=current_user.id)
 
 def choice_eartype():
     return EarType.query.filter_by(u_id=current_user.id)
+'''
 
-class EarningEntryForm(Form):
-    Ear_per_name = QuerySelectField(query_factory=choice_pername,allow_blank=False,get_label='per_name')
-    Ear_type_name = QuerySelectField(query_factory=choice_eartype,allow_blank=False,get_label='EarType_name')
+class EarningEntryForm(FlaskForm):
+    Ear_per_name=SelectField('PersonName', choices=[], coerce=int)
+    Ear_type_name=SelectField('EarningType Name', choices=[], coerce=int)
     Ear_amt = FloatField('Earning Amount:-',validators=[DataRequired()])
     Ear_date = DateField('Earning Date:-',format = '%Y-%m-%d',validators=[DataRequired()])
+    Ear_FileName = StringField('Earning FileName:-')
     Ear_img = FileField('Earning Proof File:-')
     Ear_comm = TextAreaField('Earning Comment:-',validators=[DataRequired()])
     submit = SubmitField('Save Earning')
+
+
+class EarningEditForm(FlaskForm):
+    Ear_per_name = SelectField('PersonName', choices=[], coerce=int)
+    Ear_type_name = SelectField('EarningType Name', choices=[], coerce=int)
+    Ear_amt = FloatField('Earning Amount:-', validators=[DataRequired()])
+    Ear_date = DateField('Earning Date:-', format='%Y-%m-%d', validators=[DataRequired()])
+    Ear_FileName = StringField('Earning FileName:-',validators=[DataRequired()])
+    Ear_img = FileField('Earning Proof File:-')
+    Ear_comm = TextAreaField('Earning Comment:-', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+    Delete = SubmitField('Delete')
+

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+<div class="col-md-4">
+ <h1>E2ISA Earning Edit</h1>
+
+<form class="form-inline" method="post">
+{{ form.hidden_tag() }}
+{{ form.csrf_token }}
+<input type="text" name="ear_id" value="{{request.args.get("earn_id")}}" hidden>
+
+
+<p>
+Selected Person Name:<br>
+{{ form.Ear_per_name(class='btn btn-secondary dropdown-toggle')}}
+{% for error in form.Ear_type_name.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+Selected Earning Type:<br>
+{{ form.Ear_type_name(class='btn btn-secondary dropdown-toggle')}}
+    {% for error in form.Ear_type_name.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+{{ form.Ear_amt.label }}<br>
+{{ form.Ear_amt(size=32,class='form-control') }}
+    {% for error in form.Ear_amt.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+{{ form.Ear_date.label }}<br>
+{{ form.Ear_date(class='datepicker') }}
+    {% for error in form.Ear_date.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+{{ form.Ear_FileName.label }}<br>
+{{ form.Ear_FileName (class='form-control')}}
+    {% for error in form.Ear_FileName.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+<p>
+{{ form.Ear_comm.label }}<br>
+{{ form.Ear_comm (class='form-control') }}
+    {% for error in form.Ear_comm.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>{{ form.submit(class='btn btn-primary') }}</p>
+</form>
+
+<form class="form-inline" action="/earnings/DeleteEarn">
+
+{{ form.csrf_token }}
+<input type="text" name="Delear_id" value="{{request.args.get("earn_id")}}" hidden>
+
+{{ form.Delete(class='btn btn-primary') }}
+</form>
+
+</div>
+{% endblock %}
