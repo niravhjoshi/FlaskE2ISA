@@ -1,18 +1,19 @@
 {% extends "base.html" %}
 {% block app_content %}
 
-<div class="col-md-4">
+<div class="col-md-5">
  <h1>E2ISA Earning List</h1>
 <table class="table table-striped">
 <tr>
 
 <th>Earner Name</th>
-    <th>Earning Type</th>
-<th>Earning Amount</th>
-    <th>Earning Date</th>
-    <th>Earning Download File</th>
-    <th>Earning Comment</th>
-    <th>Earning File Dump</th>
+<th>Earning Type</th>
+<th>Earning Amnt</th>
+<th>Earning Date</th>
+<th>Earning File</th>
+<th>Earning Comment</th>
+<th>Edit</th>
+<th>Download File</th>
 </tr>
     {% for earn in viewearn %}
     <form class="form-inline" action="/earnings/edit_earn">
@@ -22,6 +23,7 @@
     <td>{{earn.Ear_type_name}}</td>
     <td>{{earn.Ear_amt}}</td>
     <td>{{earn.Ear_date}}</td>
+    <td>{{earn.Ear_FileName }}</td>
     <td>{{earn.Ear_comm}}</td>
     <td><input type="submit" value="Edit" class="form-control"></td>
 </form>
