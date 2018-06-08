@@ -84,9 +84,14 @@ def edit_earn():
         earnings[0].Ear_type_name = dict(form.Ear_type_name.choices).get(form.Ear_type_name.data),
         earnings[0].Ear_amt = form.Ear_amt.data
         earnings[0].Ear_date = form.Ear_date.data
-        earnings[0].Ear_FileName = form.Ear_FileName.data
-        #earnings.Ear_img = form.Ear_img.data.read()
+
+        if form.Ear_img is None:
+            earnings[0].Ear_FileName = form.Ear_FileName.data
+        else:
+            earnings[0].Ear_img = form.Ear_img.data.read()
+            earnings[0].Ear_FileName = form.Ear_img.data.filename
         earnings[0].Ear_comm =form.Ear_comm.data
+        #earnings[0].Ear_FileName = form.Ear_FileName.data
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('earnings.list_earning'))

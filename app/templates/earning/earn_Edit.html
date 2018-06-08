@@ -4,7 +4,7 @@
 <div class="col-md-4">
  <h1>E2ISA Earning Edit</h1>
 
-<form class="form-inline" method="post">
+<form class="form-inline" method="post"  enctype="multipart/form-data">
 {{ form.hidden_tag() }}
 {{ form.csrf_token }}
 <input type="text" name="ear_id" value="{{request.args.get("earn_id")}}" hidden>
@@ -46,6 +46,13 @@ Selected Earning Type:<br>
 {{ form.Ear_FileName.label }}<br>
 {{ form.Ear_FileName (class='form-control')}}
     {% for error in form.Ear_FileName.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+<p>
+{{ form.Ear_img.label }}<br>
+{{ form.Ear_img (class='form-control')}}
+    {% for error in form.Ear_img.errors %}
 <span style="color: red;">[{{ error }}]</span>
 {% endfor %}
 </p>
