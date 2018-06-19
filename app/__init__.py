@@ -76,3 +76,5 @@ from app.addExpType import bp as addExpType
 app.register_blueprint(addExpType)
 from app.addInvType import bp as addInvType
 app.register_blueprint(addInvType)
+from app.expense import bp as expense
+app.register_blueprint(expense)

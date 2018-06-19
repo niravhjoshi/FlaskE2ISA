@@ -85,7 +85,7 @@ def edit_earn():
         earnings[0].Ear_amt = form.Ear_amt.data
         earnings[0].Ear_date = form.Ear_date.data
 
-        if form.Ear_img is None:
+        if form.Ear_img.data is None:
             earnings[0].Ear_FileName = form.Ear_FileName.data
         else:
             earnings[0].Ear_img = form.Ear_img.data.read()

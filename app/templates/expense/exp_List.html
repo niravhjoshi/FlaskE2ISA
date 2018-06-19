@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+<div class="col-md-5">
+ <h1>E2ISA Expenses List</h1>
+<table class="table table-striped">
+<tr>
+
+<th>Name</th>
+<th>Expense Type</th>
+<th>Expense Amnt</th>
+<th>Expense Date</th>
+<th>Expense File</th>
+<th>Expense Comment</th>
+<th>Edit</th>
+<th>Download File</th>
+</tr>
+    {% for exp in viewexp %}
+    <form class="form-inline" action="/expense/edit_exp">
+<tr>
+    <input type="text" name="exp_id" value="{{exp.id}}" hidden>
+    <td>{{exp.Exp_per_name}}</td>
+    <td>{{exp.Exp_type_name}}</td>
+    <td>{{exp.Exp_amt}}</td>
+    <td>{{exp.Exp_date}}</td>
+    <td>{{exp.Exp_FileName }}</td>
+    <td>{{exp.Exp_comm}}</td>
+    <td><input type="submit" value="Edit" class="form-control"></td>
+</form>
+<form class="form-inline" action="{{ url_for('expense.exp_download',id=exp.id) }}">
+    <input type="text" name="perID" value="{{exp.Per_id}}" hidden>
+    {% if exp.Exp_FileName==None  %}
+    <td></td>
+    {% else %}
+    <td><input type="submit" value="Download File" formtarget="_blank" class="form-control"></td>
+    {% endif %}
+
+</form>
+</tr>
+
+{% endfor %}
+</table>
+</div>
+{% endblock %}
