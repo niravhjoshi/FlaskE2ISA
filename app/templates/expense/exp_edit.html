@@ -1,10 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block app_content %}
 
-</body>
-</html>
+<div class="col-md-4">
+ <h1>E2ISA Expense Edit</h1>
+
+<form class="form-inline" method="post"  enctype="multipart/form-data">
+{{ form.hidden_tag() }}
+{{ form.csrf_token }}
+<input type="text" name="exp_id" value="{{request.args.get("exp_id")}}" hidden>
+
+
+<p>
+Selected Person Name:<br>
+{{ form.Exp_per_name(class='btn btn-secondary dropdown-toggle')}}
+{% for error in form.Exp_per_name.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+Selected Expense Type:<br>
+{{ form.Exp_type_name(class='btn btn-secondary dropdown-toggle')}}
+    {% for error in form.Exp_type_name.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+{{ form.Exp_amt.label }}<br>
+{{ form.Exp_amt(size=32,class='form-control') }}
+    {% for error in form.Exp_amt.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+{{ form.Exp_date.label }}<br>
+{{ form.Exp_date(class='datepicker') }}
+    {% for error in form.Exp_date.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>
+{{ form.Exp_FileName.label }}<br>
+{{ form.Exp_FileName (class='form-control')}}
+    {% for error in form.Exp_FileName.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+<p>
+{{ form.Exp_img.label }}<br>
+{{ form.Exp_img (class='form-control')}}
+    {% for error in form.Exp_img.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+<p>
+{{ form.Exp_comm.label }}<br>
+{{ form.Exp_comm (class='form-control') }}
+    {% for error in form.Exp_comm.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+</p>
+
+<p>{{ form.submit(class='btn btn-primary') }}</p>
+</form>
+
+<form class="form-inline" action="/expenses/DeleteExp">
+
+{{ form.csrf_token }}
+<input type="text" name="Delexp_id" value="{{request.args.get("exp_id")}}" hidden>
+
+{{ form.Delete(class='btn btn-primary') }}
+</form>
+
+</div>
+{% endblock %}

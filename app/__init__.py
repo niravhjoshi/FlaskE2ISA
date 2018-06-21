@@ -60,6 +60,8 @@ from models.Investtype_model import InvType
 from models.Person_model import Persons
 
 #Blueprint Import with all blueprint available
+from app.expenses import bp as expenses
+app.register_blueprint(expenses)
 from app.earnings import bp as earning
 app.register_blueprint(earning)
 from app.auth import bp as auth
@@ -76,5 +78,3 @@ from app.addExpType import bp as addExpType
 app.register_blueprint(addExpType)
 from app.addInvType import bp as addInvType
 app.register_blueprint(addInvType)
-from app.expense import bp as expense
-app.register_blueprint(expense)

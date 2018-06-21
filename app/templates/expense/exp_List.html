@@ -16,7 +16,7 @@
 <th>Download File</th>
 </tr>
     {% for exp in viewexp %}
-    <form class="form-inline" action="/expense/edit_exp">
+    <form class="form-inline" action="/expenses/edit_exp">
 <tr>
     <input type="text" name="exp_id" value="{{exp.id}}" hidden>
     <td>{{exp.Exp_per_name}}</td>
@@ -27,8 +27,8 @@
     <td>{{exp.Exp_comm}}</td>
     <td><input type="submit" value="Edit" class="form-control"></td>
 </form>
-<form class="form-inline" action="{{ url_for('expense.exp_download',id=exp.id) }}">
-    <input type="text" name="perID" value="{{exp.Per_id}}" hidden>
+<form class="form-inline" action="{{ url_for('expenses.exp_download',id=exp.id) }}">
+    <input type="text" name="perID" value="{{exp.per_id}}" hidden>
     {% if exp.Exp_FileName==None  %}
     <td></td>
     {% else %}
