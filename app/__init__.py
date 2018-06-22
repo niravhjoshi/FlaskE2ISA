@@ -60,6 +60,8 @@ from models.Investtype_model import InvType
 from models.Person_model import Persons
 
 #Blueprint Import with all blueprint available
+from app.investments import bp as investments
+app.register_blueprint(investments)
 from app.expenses import bp as expenses
 app.register_blueprint(expenses)
 from app.earnings import bp as earning

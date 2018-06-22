@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+    <div class="col-md-5">
+        <h1>E2ISA Investments List</h1>
+        <table class="table table-striped">
+            <tr>
+
+                <th>Name</th>
+                <th>Investment Type</th>
+                <th>Investment Init Amnt</th>
+                <th>Investment maturity Amnt</th>
+                <th>Investment ROI %</th>
+                <th>Investment Date</th>
+                <th>Investment Due Date</th>
+                <th>Investment maturity Date</th>
+                <th>Investment File</th>
+                <th>Investment Comment</th>
+                <th>Edit</th>
+                <th>Download File</th>
+            </tr>
+            {% for inv in viewinv %}
+                <form class="form-inline" action="/investments/edit_inv">
+                    <tr>
+                        <input type="text" name="inv_id" value="{{ inv.id }}" hidden>
+                        <td>{{ inv.Inv_per_name }}</td>
+                        <td>{{ inv.Inv_type_name }}</td>
+                        <td>{{ inv.Inv_init_amt }}</td>
+                        <td>{{ inv.Inv_mat_amt }}</td>
+                        <td>{{ inv.Inv_ROI_PerYear }}</td>
+                        <td>{{ inv.Inv_date }}</td>
+                        <td>{{ inv.Inv_due_date }}</td>
+                        <td>{{ inv.Inv_mat_date }}</td>
+                        <td>{{ inv.Inv_Filename }}</td>
+                        <td>{{ inv.Inv_comm }}</td>
+                        <td><input type="submit" value="Edit" class="form-control"></td>
+                </form>
+                <form class="form-inline" action="{{ url_for('investments.inv_download',id=inv.id) }}">
+                    <input type="text" name="perID" value="{{ inv.per_id }}" hidden>
+                    {% if inv.Inv_Filename==None %}
+                        <td></td>
+                    {% else %}
+                        <td><input type="submit" value="Download File" formtarget="_blank" class="form-control"></td>
+                    {% endif %}
+
+                </form>
+                </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

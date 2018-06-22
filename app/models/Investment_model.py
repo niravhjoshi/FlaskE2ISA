@@ -19,6 +19,7 @@ class Investments(db.Model):
     Inv_date = db.Column(db.DateTime,index=True)
     Inv_mat_date = db.Column(db.DateTime,index=True)
     Inv_due_date = db.Column(db.DateTime,index=True)
+    Inv_Filename = db.Column(db.String(300))
     Inv_img = db.Column(db.LargeBinary)
     Inv_comm = db.Column(db.String(200))
 
