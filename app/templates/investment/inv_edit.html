@@ -7,59 +7,81 @@
         <form class="form-inline" method="post" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             {{ form.csrf_token }}
-            <input type="text" name="exp_id" value="{{ request.args.get("exp_id") }}" hidden>
+            <input type="text" name="inv_id" value="{{ request.args.get("inv_id") }}" hidden>
 
 
             <p>
-                Selected Person Name:<br>
-                {{ form.Exp_per_name(class='btn btn-secondary dropdown-toggle') }}
-                {% for error in form.Exp_per_name.errors %}
+               {{ form.Inv_per_name.label }}<br>
+                {{ form.Inv_per_name(class='btn btn-secondary dropdown-toggle') }}
+                {% for error in form.Inv_per_name.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
 
             <p>
-                Selected Expense Type:<br>
-                {{ form.Exp_type_name(class='btn btn-secondary dropdown-toggle') }}
-                {% for error in form.Exp_type_name.errors %}
+                {{ form.Inv_type_name.label }}<br>
+                {{ form.Inv_type_name(class='btn btn-secondary dropdown-toggle') }}
+                {% for error in form.Inv_type_name.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
 
             <p>
-                {{ form.Exp_amt.label }}<br>
-                {{ form.Exp_amt(size=32,class='form-control') }}
-                {% for error in form.Exp_amt.errors %}
+                {{ form.Inv_init_amt.label }}<br>
+                {{ form.Inv_init_amt(size=32,class='form-control') }}
+                {% for error in form.Inv_init_amt.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
 
             <p>
-                {{ form.Exp_date.label }}<br>
-                {{ form.Exp_date(class='datepicker') }}
-                {% for error in form.Exp_date.errors %}
+                {{ form.Inv_mat_amt.label }}<br>
+                {{ form.Inv_mat_amt(size=32,class='form-control') }}
+                {% for error in form.Inv_mat_amt.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
 
             <p>
-                {{ form.Exp_FileName.label }}<br>
-                {{ form.Exp_FileName (class='form-control') }}
-                {% for error in form.Exp_FileName.errors %}
+                {{ form.Inv_roiper_amt.label }}<br>
+                {{ form.Inv_roiper_amt(size=32,class='form-control') }}
+                {% for error in form.Inv_roiper_amt.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+
+            <p>
+                {{ form.Inv_date.label }}<br>
+                {{ form.Inv_date(class='datepicker') }}
+                {% for error in form.Inv_date.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
             <p>
-                {{ form.Exp_img.label }}<br>
-                {{ form.Exp_img (class='form-control') }}
-                {% for error in form.Exp_img.errors %}
+                {{ form.Inv_due_date.label }}<br>
+                {{ form.Inv_due_date(class='datepicker') }}
+                {% for error in form.Inv_due_date.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
             <p>
-                {{ form.Exp_comm.label }}<br>
-                {{ form.Exp_comm (class='form-control') }}
-                {% for error in form.Exp_comm.errors %}
+                {{ form.Inv_FileName.label }}<br>
+                {{ form.Inv_FileName (class='form-control') }}
+                {% for error in form.Inv_FileName.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.Inv_img.label }}<br>
+                {{ form.Inv_img (class='form-control') }}
+                {% for error in form.Inv_img.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.Inv_comm.label }}<br>
+                {{ form.Inv_comm (class='form-control') }}
+                {% for error in form.Inv_comm.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
@@ -67,10 +89,10 @@
             <p>{{ form.submit(class='btn btn-primary') }}</p>
         </form>
 
-        <form class="form-inline" action="/expenses/DeleteExp">
+        <form class="form-inline" action="/investments/DeleteInv">
 
             {{ form.csrf_token }}
-            <input type="text" name="Delexp_id" value="{{ request.args.get("exp_id") }}" hidden>
+            <input type="text" name="Delinv_id" value="{{ request.args.get("inv_id") }}" hidden>
 
             {{ form.Delete(class='btn btn-primary') }}
         </form>

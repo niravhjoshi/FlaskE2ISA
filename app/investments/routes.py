@@ -8,7 +8,7 @@ from datetime import datetime
 from ..models.Investment_model import Investments
 from ..models.Person_model import Persons
 from ..models.Investtype_model import InvType
-from app.expenses import bp
+from app.investments import bp
 from base64 import b64encode
 from io import BytesIO
 
@@ -24,7 +24,7 @@ def before_request():
 
 @bp.route('/investments/inv_add', methods=['GET', 'POST'])
 @login_required
-def inv_add():
+def invest_add():
     form = InvestEntryForm()
     person = Persons.query.filter_by(u_id=current_user.id)
     invtype = InvType.query.filter_by(u_id=current_user.id)
@@ -49,13 +49,13 @@ def inv_add():
         db.session.add(InvestRow)
         db.session.commit()
         flash("Invest Entry and file has been Saved Fine")
-        return redirect(url_for('investments.list_investments'))
+        return redirect(url_for('investments.invest_list'))
     return render_template('investment/inv_add.html', title='Add Expense', form=form)
 
 
-@bp.route('/investments/inv_list', methods=['GET', 'POST'])
+@bp.route('/investments/inv_list', methods=['GET','POST'])
 @login_required
-def inv_list():
+def invest_list():
     investlist = Investments.query.filter_by(U_id=current_user.id).all()
     return render_template('investment/inv_list.html', viewinv=investlist)
 
@@ -64,7 +64,6 @@ def inv_list():
 @login_required
 def inv_download(id):
     perid = request.args.get("perID")
-    # newearn = Earnings.query.get_or_404(perid,id)
     investment = Investments.query.filter_by(per_id=perid, U_id=current_user.id).all()
     filebuff = investment[0].Inv_img
     filename = investment[0].Inv_Filename
@@ -106,7 +105,7 @@ def edit_inv():
         investments[0].Inv_comm = form.Inv_comm.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('investments.list_investments'))
+        return redirect(url_for('investments.invest_list'))
 
     elif request.method == 'GET':
         # THis code will load the dropdown box.
@@ -142,7 +141,7 @@ def DeleteInv():
         db.session.delete(delinv)
         db.session.commit()
         flash("Investment Record is Deleted")
-        return redirect(url_for('investment.list_investments'))
+        return redirect(url_for('investment.invest_list'))
     except Exception as StandardError:
         flash('There was Exception Investment cannot be delete he/she may some records in tables.')
-        return redirect(url_for('investment.list_investments'))
+        return redirect(url_for('investment.invest_list'))

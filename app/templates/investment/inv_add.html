@@ -1,87 +1,87 @@
 {% extends "base.html" %}
 {% block app_content %}
 
-<div class="col-md-4">
- <h1>E2ISA Investment Add</h1>
-<form action="" method="post" enctype="multipart/form-data">
-{{ form.hidden_tag() }}
-{{ form.csrf_token }}
-<p>
-{{ form.Inv_per_name.label }}<br>
-{{ form.Inv_per_name(class='btn btn-secondary dropdown-toggle')}}
-{% for error in form.Inv_per_name.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
-<p>
-{{ form.Inv_type_name.label }}<br>
-{{ form.Inv_type_name(class='btn btn-secondary dropdown-toggle')}}
-    {% for error in form.Inv_type_name.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
-<p>
-{{ form.Inv_date.label }}<br>
-{{ form.Inv_date(class='btn btn-secondary dropdown-toggle')}}
-    {% for error in form.Inv_date.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
-<p>
-{{ form.Inv_Mat_date.label }}<br>
-{{ form.Inv_Mat_date(class='btn btn-secondary dropdown-toggle')}}
-    {% for error in form.Inv_Mat_date.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
-<p>
-{{ form.Inv_due_date.label }}<br>
-{{ form.Inv_due_date(class='btn btn-secondary dropdown-toggle')}}
-    {% for error in form.Inv_due_date.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
+    <div class="col-md-4">
+        <h1>E2ISA Investment Add</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            {{ form.csrf_token }}
+            <p>
+                {{ form.Inv_per_name.label }}<br>
+                {{ form.Inv_per_name(class='btn btn-secondary dropdown-toggle') }}
+                {% for error in form.Inv_per_name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.Inv_type_name.label }}<br>
+                {{ form.Inv_type_name(class='btn btn-secondary dropdown-toggle') }}
+                {% for error in form.Inv_type_name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.Inv_date.label }}<br>
+                {{ form.Inv_date(class='btn btn-secondary dropdown-toggle') }}
+                {% for error in form.Inv_date.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.Inv_Mat_date.label }}<br>
+                {{ form.Inv_Mat_date(class='btn btn-secondary dropdown-toggle') }}
+                {% for error in form.Inv_Mat_date.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.Inv_due_date.label }}<br>
+                {{ form.Inv_due_date(class='btn btn-secondary dropdown-toggle') }}
+                {% for error in form.Inv_due_date.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
 
-<p>
-{{ form.Inv_init_amt.label }}<br>
-{{ form.Inv_init_amt(size=32,class='form-control') }}
-    {% for error in form.Inv_init_amt.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
+            <p>
+                {{ form.Inv_init_amt.label }}<br>
+                {{ form.Inv_init_amt(size=32,class='form-control') }}
+                {% for error in form.Inv_init_amt.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
 
-<p>
-{{ form.Inv_mat_amt.label }}<br>
-{{ form.Inv_mat_amt(size=32,class='form-control') }}
-    {% for error in form.Inv_mat_amt.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
+            <p>
+                {{ form.Inv_mat_amt.label }}<br>
+                {{ form.Inv_mat_amt(size=32,class='form-control') }}
+                {% for error in form.Inv_mat_amt.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
 
-<p>
-{{ form.Inv_roiper_amt.label }}<br>
-{{ form.Inv_roiper_amt(class='datepicker') }}
-    {% for error in form.Inv_roiper_amt.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
+            <p>
+                {{ form.Inv_roiper_amt.label }}<br>
+                {{ form.Inv_roiper_amt(class='datepicker') }}
+                {% for error in form.Inv_roiper_amt.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
 
-<p>
-{{ form.Inv_img.label }}<br>
-{{ form.Inv_img (class='form-control')}}
-    {% for error in form.Inv_img.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
-    <p>
-{{ form.Inv_comm.label }}<br>
-{{ form.Inv_comm (class='form-control') }}
-    {% for error in form.Inv_comm.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-</p>
+            <p>
+                {{ form.Inv_img.label }}<br>
+                {{ form.Inv_img (class='form-control') }}
+                {% for error in form.Inv_img.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.Inv_comm.label }}<br>
+                {{ form.Inv_comm (class='form-control') }}
+                {% for error in form.Inv_comm.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
 
-<p>{{ form.submit(class='btn btn-primary') }}</p>
-</form>
-</div>
+            <p>{{ form.submit(class='btn btn-primary') }}</p>
+        </form>
+    </div>
 {% endblock %}
