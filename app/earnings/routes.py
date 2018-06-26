@@ -57,7 +57,7 @@ def list_earning():
 def earn_download(id):
     perid = request.args.get("perID")
     #newearn = Earnings.query.get_or_404(perid,id)
-    earnings = Earnings.query.filter_by(Per_id=perid , U_id=current_user.id).all()
+    earnings = Earnings.query.filter_by(Per_id=perid , U_id=current_user.id,id=id).all()
     filebuff = earnings[0].Ear_img
     filename = earnings[0].Ear_FileName
     return send_file(BytesIO(filebuff),attachment_filename=filename)

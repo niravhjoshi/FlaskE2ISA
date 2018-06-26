@@ -59,7 +59,7 @@ def list_expenses():
 def exp_download(id):
     perid = request.args.get("perID")
     #newearn = Earnings.query.get_or_404(perid,id)
-    expenses = Expenses.query.filter_by(per_id=perid , U_id=current_user.id).all()
+    expenses = Expenses.query.filter_by(per_id=perid , U_id=current_user.id,id=id).all()
     filebuff = expenses[0].Exp_img
     filename = expenses[0].Exp_FileName
     return send_file(BytesIO(filebuff),attachment_filename=filename)

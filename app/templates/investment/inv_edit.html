@@ -11,7 +11,7 @@
 
 
             <p>
-               {{ form.Inv_per_name.label }}<br>
+                {{ form.Inv_per_name.label }}<br>
                 {{ form.Inv_per_name(class='btn btn-secondary dropdown-toggle') }}
                 {% for error in form.Inv_per_name.errors %}
                     <span style="color: red;">[{{ error }}]</span>
@@ -65,12 +65,21 @@
                 {% endfor %}
             </p>
             <p>
+                {{ form.Inv_Mat_date.label }}<br>
+                {{ form.Inv_Mat_date(class='datepicker') }}
+                {% for error in form.Inv_Mat_date.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+
+            <p>
                 {{ form.Inv_FileName.label }}<br>
                 {{ form.Inv_FileName (class='form-control') }}
                 {% for error in form.Inv_FileName.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
+
             <p>
                 {{ form.Inv_img.label }}<br>
                 {{ form.Inv_img (class='form-control') }}

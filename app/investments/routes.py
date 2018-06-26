@@ -64,7 +64,7 @@ def invest_list():
 @login_required
 def inv_download(id):
     perid = request.args.get("perID")
-    investment = Investments.query.filter_by(per_id=perid, U_id=current_user.id).all()
+    investment = Investments.query.filter_by(per_id=perid, U_id=current_user.id,id=id).all()
     filebuff = investment[0].Inv_img
     filename = investment[0].Inv_Filename
     return send_file(BytesIO(filebuff), attachment_filename=filename)

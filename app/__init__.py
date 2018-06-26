@@ -14,7 +14,8 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
 login = LoginManager(app)
-login.login_view = 'login'
+login.login_view = 'auth.login'
+login.login_message = ('Please log in to access this page.')
 
 
 # Mail configuration for Error loging
@@ -48,7 +49,7 @@ if not app.debug:
     app.logger.info('E2ISA App startup')
 
 
-from app import routes,errors
+
 from models.Share_model import Shares
 from models.Investment_model import Investments
 from models.Users_model import User
