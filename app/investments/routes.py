@@ -121,12 +121,12 @@ def edit_inv():
         Perid = Persons.query.filter_by(per_name=investments[0].Inv_per_name).all()
         form.Inv_type_name.data = int(Invid[0].id)
         form.Inv_per_name.data = int(Perid[0].id)
-        form.Inv_init_amt.data = investments[0].Inv_init_amt,
-        form.Inv_mat_amt.data = investments[0].Inv_mat_amt,
-        form.Inv_roiper_amt.data = investments[0].Inv_ROI_PerYear,
-        form.Inv_date.data = investments[0].Inv_date,
-        form.Inv_Mat_date.data = investments[0].Inv_mat_date,
-        form.Inv_due_date.data = investments[0].Inv_due_date,
+        form.Inv_init_amt.data = investments[0].Inv_init_amt
+        form.Inv_mat_amt.data = investments[0].Inv_mat_amt
+        form.Inv_roiper_amt.data = investments[0].Inv_ROI_PerYear
+        form.Inv_date.data = investments[0].Inv_date
+        form.Inv_Mat_date.data = investments[0].Inv_mat_date
+        form.Inv_due_date.data = investments[0].Inv_due_date
         form.Inv_FileName.data = investments[0].Inv_Filename
         form.Inv_comm.data = investments[0].Inv_comm
     return render_template('investment/inv_edit.html', form=form, inv=investments)
@@ -141,7 +141,7 @@ def DeleteInv():
         db.session.delete(delinv)
         db.session.commit()
         flash("Investment Record is Deleted")
-        return redirect(url_for('investment.invest_list'))
+        return redirect(url_for('investments.invest_list'))
     except Exception as StandardError:
         flash('There was Exception Investment cannot be delete he/she may some records in tables.')
-        return redirect(url_for('investment.invest_list'))
+        return redirect(url_for('investments.invest_list'))

@@ -11,7 +11,7 @@
 
 
             <p>
-                {{ form.Inv_per_name.label }}<br>
+                Selected Person Name:<br>
                 {{ form.Inv_per_name(class='btn btn-secondary dropdown-toggle') }}
                 {% for error in form.Inv_per_name.errors %}
                     <span style="color: red;">[{{ error }}]</span>
@@ -19,7 +19,7 @@
             </p>
 
             <p>
-                {{ form.Inv_type_name.label }}<br>
+                Selected Invest Type:<br>
                 {{ form.Inv_type_name(class='btn btn-secondary dropdown-toggle') }}
                 {% for error in form.Inv_type_name.errors %}
                     <span style="color: red;">[{{ error }}]</span>
@@ -50,27 +50,8 @@
                 {% endfor %}
             </p>
 
-            <p>
-                {{ form.Inv_date.label }}<br>
-                {{ form.Inv_date(class='datepicker') }}
-                {% for error in form.Inv_date.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.Inv_due_date.label }}<br>
-                {{ form.Inv_due_date(class='datepicker') }}
-                {% for error in form.Inv_due_date.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.Inv_Mat_date.label }}<br>
-                {{ form.Inv_Mat_date(class='datepicker') }}
-                {% for error in form.Inv_Mat_date.errors %}
-                    <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
-            </p>
+
+
 
             <p>
                 {{ form.Inv_FileName.label }}<br>
