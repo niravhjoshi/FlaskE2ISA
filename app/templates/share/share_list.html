@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block app_content %}
+
+    <div class="col-md-5">
+        <h1>E2ISA Investments List</h1>
+        <table class="table table-striped">
+            <tr>
+
+                <th>Name</th>
+                <th>Shares Name</th>
+                <th>Total Shares Count</th>
+                <th>Shares Transaction Type</th>
+                <th>Per Share Value</th>
+                <th>Shares Sell/Buy date</th>
+                <th>Shares File</th>
+                <th>Shares Comment</th>
+                <th>Edit</th>
+                <th>Download File</th>
+            </tr>
+            {% for share in viewshare %}
+                <form class="form-inline" action="/shares/edit_share">
+                    <tr>
+                        <input type="text" name="share_id" value="{{ share.id }}" hidden>
+                        <td>{{ share.Share_per_name }}</td>
+                        <td>{{ share.Share_tick_name }}</td>
+                        <td>{{ share.Share_Count }}</td>
+                        <td>{{ share.Share_tran_type }}</td>
+                        <td>{{ share.Share_pershare_amt }}</td>
+                        <td>{{ share.Share_inv_sell_date }}</td>
+                        <td>{{ share.Share_FileName }}</td>
+                        <td>{{ share.Share_comm }}</td>
+                        <td><input type="submit" value="Edit" class="form-control"></td>
+                </form>
+                <form class="form-inline" action="{{ url_for('shares.share_download',id=share.id) }}">
+                    <input type="text" name="perID" value="{{ share.per_id }}" hidden>
+                    {% if share.Share_FileName==None %}
+                        <td></td>
+                    {% else %}
+                        <td><input type="submit" value="Download File" formtarget="_blank" class="form-control"></td>
+                    {% endif %}
+
+                </form>
+                </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
