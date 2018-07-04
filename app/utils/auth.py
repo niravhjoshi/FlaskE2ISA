@@ -20,6 +20,9 @@ def unauthorized():
     response.status_code = 401
     return response
 
+
+
+'''
 @auth_token.verify_password
 def verify_auth_token(token, unused):
     if current_app.config.get('IGNORE_AUTH') is True:
@@ -34,3 +37,4 @@ def unauthorized_token():
                         'message': 'please send your authentication token'})
     response.status_code = 401
     return response
+'''

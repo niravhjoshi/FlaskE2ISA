@@ -1,6 +1,6 @@
 from flask_login import UserMixin,LoginManager
 from flask_sqlalchemy  import SQLAlchemy
-from app import db,login
+from app import db,loginMan
 from datetime import datetime
 from hashlib import md5
 from dateutil.tz import tzutc
@@ -43,7 +43,7 @@ class User(UserMixin,db.Model):
             digest, size)
 
 # Load user function will load users details from DB to application memeory
-@login.user_loader
+@loginMan.user_loader
 def load_user(id):
    return User.query.get(int(id))
 

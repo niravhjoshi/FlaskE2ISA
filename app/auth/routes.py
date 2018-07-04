@@ -1,20 +1,17 @@
 from app import app,db
 from flask import render_template,flash, redirect, url_for, request
 from forms import LoginForm,RegistrationForm,EditProfileForm
-from app.earnings.forms import EarningEntryForm
 from flask_login import current_user, login_user,logout_user,login_required
 from app.models.Users_model import User
-from app.models.Person_model import Persons
-from app.models.Eartype_model import EarType
-from werkzeug.urls import url_parse
-from flask_login import login_user, logout_user, current_user, login_required
-from datetime import datetime
+from flask_login import login_user, logout_user, current_user, login_required,UserMixin
+from requests_oauthlib import OAuth2Session
+from requests.exceptions import HTTPError
+import json
 from app.auth import bp
 
 #This decorator function witll implement login method
 @bp.route('/login',methods=['GET','POST'])
 def login():
-
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.username.data).first()
@@ -45,3 +42,4 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', title='Register', form=form)
+

@@ -13,9 +13,10 @@ bootstrap = Bootstrap(app)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
-login = LoginManager(app)
-login.login_view = 'auth.login'
-login.login_message = ('Please log in to access this page.')
+loginMan = LoginManager(app)
+loginMan.login_view = 'auth.login'
+loginMan.login_message = ('Please log in to access this page.')
+loginMan.session_protection = "strong"
 
 
 # Mail configuration for Error loging

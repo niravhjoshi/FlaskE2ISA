@@ -10,6 +10,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
                               'mysql+pymysql://root:root@localhost/e2isa'
 
+    OAUTHLIB_INSECURE_TRANSPORT = 1
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'email-smtp.us-west-2.amazonaws.com"'
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 587)
@@ -20,3 +21,17 @@ class Config(object):
     LANGUAGES = ['en', 'es']
     MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
     POSTS_PER_PAGE = 25
+    OAUTH_CREDENTIALS = {
+        'Google': {
+            'id': '33511635428-s6l2u5vicfqnd91c8sim6e1ktsdcgm3u.apps.googleusercontent.com',
+            'secret': 'eqSfdnNgBLOr4OJzH9OXdGoo'
+        },
+        'twitter': {
+            'id': 'R0qItN9CYMW3YYZXPq39rRMvh',
+            'secret': 'RnPLRYzZOTB0yXFWjkVvlgaJf3qPkBkMpS949bC6WtKYMpXrVF'
+        },
+        'github':{
+            'id': '3RzWQclolxWZIMq5LJqzRZPTl',
+            'secret': 'm9TEd58DSEtRrZHpz2EjrV9AhsBRxKMo8m3kuIZj3zLwzwIimt'
+        }
+    }

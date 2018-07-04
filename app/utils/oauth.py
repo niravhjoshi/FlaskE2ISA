@@ -1,8 +1,8 @@
-import json
-
+import json,urllib2
+from requests.exceptions import HTTPError
 from rauth import OAuth1Service, OAuth2Service
 from flask import current_app, url_for, request, redirect, session
-
+from requests_oauthlib import OAuth2Session
 
 class OAuthSignIn(object):
     providers = None
@@ -20,7 +20,7 @@ class OAuthSignIn(object):
         pass
 
     def get_callback_url(self):
-        return url_for('oauth_callback', provider=self.provider_name,
+        return url_for('main.oauth_callback', provider=self.provider_name,
                        _external=True)
 
     @classmethod
@@ -33,16 +33,18 @@ class OAuthSignIn(object):
         return self.providers[provider_name]
 
 
-class FacebookSignIn(OAuthSignIn):
+class GoogleSignIn(OAuthSignIn):
     def __init__(self):
-        super(FacebookSignIn, self).__init__('facebook')
+        super(GoogleSignIn, self).__init__('Google')
+        googleinfo = urllib2.urlopen('https://accounts.google.com/.well-known/openid-configuration')
+        google_params = json.load(googleinfo)
         self.service = OAuth2Service(
-            name='facebook',
+            name='Google',
             client_id=self.consumer_id,
             client_secret=self.consumer_secret,
-            authorize_url='https://graph.facebook.com/oauth/authorize',
-            access_token_url='https://graph.facebook.com/oauth/access_token',
-            base_url='https://graph.facebook.com/'
+            authorize_url=google_params.get('authorization_endpoint'),
+            base_url=google_params.get('userinfo_endpoint'),
+            access_token_url=google_params.get('token_endpoint')
         )
 
     def authorize(self):
@@ -64,14 +66,9 @@ class FacebookSignIn(OAuthSignIn):
                   'redirect_uri': self.get_callback_url()},
             decoder=decode_json
         )
-        me = oauth_session.get('me?fields=id,email').json()
-        return (
-            'facebook$' + me['id'],
-            me.get('email').split('@')[0],  # Facebook does not provide
-                                            # username, so the email's user
-                                            # is used instead
-            me.get('email')
-        )
+        me = oauth_session.get('').json()
+        return (me['name'],
+                me['email'])
 
 
 class TwitterSignIn(OAuthSignIn):
@@ -89,7 +86,7 @@ class TwitterSignIn(OAuthSignIn):
 
     def authorize(self):
         request_token = self.service.get_request_token(
-            params={'oauth_callback': self.get_callback_url()}
+            params={'main.oauth_callback': self.get_callback_url()}
         )
         session['request_token'] = request_token
         return redirect(self.service.get_authorize_url(request_token[0]))
@@ -106,4 +103,6 @@ class TwitterSignIn(OAuthSignIn):
         me = oauth_session.get('account/verify_credentials.json').json()
         social_id = 'twitter$' + str(me.get('id'))
         username = me.get('screen_name')
-        return social_id, username, None   # Twitter does not provide email
+        email = username+'@oauth.com'
+        return social_id, username, email   # Twitter does not provide email
+

@@ -10,7 +10,8 @@ from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user, login_required
 from datetime import datetime
 from app.main import bp
-
+from app.utils.oauth import OAuthSignIn
+from app import LoginManager
 
 #This deocrator function will ensure that if page is served it must have authenticated users
 @bp.before_request
@@ -49,3 +50,49 @@ def edit_profile():
         form.nickname.data = current_user.nickname
         form.mob.data = current_user.mob
     return render_template('auth/editprofile.html',form=form)
+
+
+lm =LoginManager(app)
+@lm.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+@bp.route('/authorize/<provider>')
+def oauth_authorize(provider):
+    if not current_user.is_anonymous:
+        return redirect(url_for('auth.user'))
+    oauth= OAuthSignIn.get_provider(provider)
+    return oauth.authorize()
+
+@bp.route('/callback/<provider>')
+def oauth_callback(provider):
+    if provider =='twitter':
+        if not current_user.is_anonymous:
+            return redirect(url_for('auth.user'))
+        oauth = OAuthSignIn.get_provider(provider)
+        social_id, username, email = oauth.callback()
+        if social_id is None:
+            flash('Authentication failed.')
+            return redirect(url_for('/index'))
+        user = User.query.filter_by(social_id=social_id).first()
+        if not user:
+            user = User(social_id=social_id, nickname=username, email=email)
+            db.session.add(user)
+            db.session.commit()
+        login_user(user, True)
+        return redirect(url_for('main.index'))
+    else:
+        if not current_user.is_anonymous:
+            return redirect(url_for('auth.user'))
+        oauth = OAuthSignIn.get_provider(provider)
+        name, email = oauth.callback()
+        if email is None:
+            flash('Authentication failed.')
+            return redirect(url_for('/index'))
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            user = User(nickname=name, email=email)
+            db.session.add(user)
+            db.session.commit()
+        login_user(user, True)
+        return redirect(url_for('main.index'))
