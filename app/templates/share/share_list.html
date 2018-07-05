@@ -43,6 +43,12 @@
                 </tr>
 
             {% endfor %}
+            {% if prev_url %}
+                <a href="{{ prev_url }}">Previous</a>
+            {% endif %}
+            {% if next_url %}
+                <a href="{{ next_url }}">Next</a>
+            {% endif %}
         </table>
     </div>
 {% endblock %}

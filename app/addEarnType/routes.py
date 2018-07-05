@@ -35,8 +35,11 @@ def addEarnType():
 @bp.route('/addEarnType/ListEarnType',methods =['GET','POST'])
 @login_required
 def ListEarningType():
-    EarTypes = EarType.query.filter_by(u_id=current_user.id).all()
-    return render_template('addEarn/earn_typeList.html', vieweartype=EarTypes)
+    page = request.args.get('page', 1, type=int)
+    EarTypes = EarType.query.filter_by(u_id=current_user.id).order_by(EarType.EarType_cdate.desc()).paginate(page, app.config['RECORDS_PER_PAGE'], False)
+    next_url = url_for('addEarnType.ListEarningType', page=EarTypes.next_num) if EarTypes.has_next else None
+    prev_url = url_for('addEarnType.ListEarningType', page=EarTypes.prev_num) if EarTypes.has_prev else None
+    return render_template('addEarn/earn_typeList.html', vieweartype=EarTypes.items,next_url=next_url,prev_url=prev_url)
 
 
 #This function will Edit Earning types in DB

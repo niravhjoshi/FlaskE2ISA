@@ -35,8 +35,11 @@ def addPersonNames():
 @bp.route('/addEPES/ListPersons',methods =['GET','POST'])
 @login_required
 def ListPersons():
-    persons = Persons.query.filter_by(u_id=current_user.id).all()
-    return render_template('persons/person_addView.html', viewper=persons)
+    page = request.args.get('page', 1, type=int)
+    persons = Persons.query.filter_by(u_id=current_user.id).order_by(Persons.per_bdate.desc()).paginate(page, app.config['RECORDS_PER_PAGE'],False)
+    next_url = url_for('addEPES.ListPersons', page=persons.next_num) if persons.has_next else None
+    prev_url = url_for('addEPES.ListPersons', page=persons.prev_num) if persons.has_prev else None
+    return render_template('persons/person_addView.html', viewper=persons.items,next_url=next_url,prev_url=prev_url)
 
 
 @bp.route('/addEPES/EditPersons',methods=['GET','POST'])

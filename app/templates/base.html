@@ -8,7 +8,8 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -19,23 +20,45 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.index') }}">{{ 'Home' }}</a></li>
-                    <li><a href="{{ url_for('main.index') }}">{{ 'Expense' }}</a></li>
-                    <li><a href="{{ url_for('main.index') }}">{{ 'Earnings' }}</a></li>
-                    <li><a href="{{ url_for('main.index') }}">{{ 'Investments' }}</a></li>
-                    <li><a href="{{ url_for('main.index') }}">{{ 'Shares' }}</a></li>
+                    <li>
+                        <a href="{{ url_for('expenses.exp_add') }}">{{ 'Expense Add' }}</a>
+                        <a href="{{ url_for('expenses.list_expenses') }}">{{ 'Expense List' }}</a>
+                        <a href="{{ url_for('addExpType.addExpType') }}">{{ 'Expense Type Add' }}</a>
+                        <a href="{{ url_for('addExpType.ListExpTypes') }}">{{ 'Expense Type List' }}</a>
+                    </li>
+                    <li>
+                    <a href="{{ url_for('earnings.earn_add') }}">{{ 'Earnings Add' }}</a>
+                    <a href="{{ url_for('earnings.list_earning') }}">{{ 'Earnings List' }}</a>
+                        <a href="{{ url_for('addEarnType.addEarnType') }}">{{ 'Earnings Type Add' }}</a>
+                    <a href="{{ url_for('addEarnType.ListEarningType') }}">{{ 'Earnings Type List' }}</a>
+                    </li>
+
+                    <li>
+                    <a href="{{ url_for('investments.invest_list') }}">{{ 'Investments List' }}</a>
+                        <a href="{{ url_for('investments.invest_add') }}">{{ 'Investments Add' }}</a>
+                        <a href="{{ url_for('addInvType.ListInvTypes') }}">{{ 'Investments Type List' }}</a>
+                        <a href="{{ url_for('addInvType.addInvType') }}">{{ 'Investments Type Add' }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('shares.share_add') }}">{{ 'Shares Add' }}</a>
+                        <a href="{{ url_for('shares.share_list') }}">{{ 'Shares List' }}</a>
+                    </li>
                     <li><a href="{{ url_for('main.index') }}">{{ 'Analytics' }}</a></li>
-                    <li><a href="{{ url_for('main.index') }}">{{ 'Reports' }}</a></li>
+                    <li>
+                        <a href="{{ url_for('addEPES.ListPersons')}}">{{ 'List Users' }}</a>
+                    <a href="{{ url_for('addEPES.addPersonNames')}}">{{ 'Add Users' }}</a>
+                    </li>
                     <li><a href="{{ url_for('main.index') }}">{{ 'About US' }}</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-            {% if current_user.is_anonymous %}
-                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-            {% else %}
-                <a href="{{ url_for('main.user', email=current_user.email) }}">Profile</a>
-                   <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-            {% endif %}
+                    {% if current_user.is_anonymous %}
+                        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    {% else %}
+                        <a href="{{ url_for('main.user', email=current_user.email) }}">Profile</a>
+                        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                    {% endif %}
 
-                 </ul>
+                </ul>
             </div>
         </div>
     </nav>
@@ -44,11 +67,11 @@
 {% block content %}
     <div class="container">
         {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
         {% endwith %}
 
         {# application content needs to be provided in the app_content block #}
@@ -57,14 +80,16 @@
 {% endblock %}
 
 {% block scripts %}
-{{super()}}
-     <script
-  src="https://code.jquery.com/jquery-2.2.4.min.js"
-  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-  crossorigin="anonymous"></script>
-  <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
-  <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+    {{ super() }}
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+    <script type='text/javascript'
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 
 {% endblock %}

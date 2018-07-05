@@ -1,44 +1,50 @@
 {% extends "base.html" %}
 {% block app_content %}
 
-<div class="col-md-5">
- <h1>E2ISA Earning List</h1>
-<table class="table table-striped">
-<tr>
+    <div class="col-md-5">
+        <h1>E2ISA Earning List</h1>
+        <table class="table table-striped">
+            <tr>
 
-<th>Earner Name</th>
-<th>Earning Type</th>
-<th>Earning Amnt</th>
-<th>Earning Date</th>
-<th>Earning File</th>
-<th>Earning Comment</th>
-<th>Edit</th>
-<th>Download File</th>
-</tr>
-    {% for earn in viewearn %}
-    <form class="form-inline" action="/earnings/edit_earn">
-<tr>
-    <input type="text" name="earn_id" value="{{earn.id}}" hidden>
-    <td>{{earn.Ear_per_name}}</td>
-    <td>{{earn.Ear_type_name}}</td>
-    <td>{{earn.Ear_amt}}</td>
-    <td>{{earn.Ear_date}}</td>
-    <td>{{earn.Ear_FileName }}</td>
-    <td>{{earn.Ear_comm}}</td>
-    <td><input type="submit" value="Edit" class="form-control"></td>
-</form>
-<form class="form-inline" action="{{ url_for('earnings.earn_download',id=earn.id) }}">
-    <input type="text" name="perID" value="{{earn.Per_id}}" hidden>
-    {% if earn.Ear_FileName==None  %}
-    <td></td>
-    {% else %}
-    <td><input type="submit" value="Download File" formtarget="_blank" class="form-control"></td>
-    {% endif %}
+                <th>Earner Name</th>
+                <th>Earning Type</th>
+                <th>Earning Amnt</th>
+                <th>Earning Date</th>
+                <th>Earning File</th>
+                <th>Earning Comment</th>
+                <th>Edit</th>
+                <th>Download File</th>
+            </tr>
+            {% for earn in viewearn %}
+                <form class="form-inline" action="/earnings/edit_earn">
+                    <tr>
+                        <input type="text" name="earn_id" value="{{ earn.id }}" hidden>
+                        <td>{{ earn.Ear_per_name }}</td>
+                        <td>{{ earn.Ear_type_name }}</td>
+                        <td>{{ earn.Ear_amt }}</td>
+                        <td>{{ earn.Ear_date }}</td>
+                        <td>{{ earn.Ear_FileName }}</td>
+                        <td>{{ earn.Ear_comm }}</td>
+                        <td><input type="submit" value="Edit" class="form-control"></td>
+                </form>
+                <form class="form-inline" action="{{ url_for('earnings.earn_download',id=earn.id) }}">
+                    <input type="text" name="perID" value="{{ earn.Per_id }}" hidden>
+                    {% if earn.Ear_FileName==None %}
+                        <td></td>
+                    {% else %}
+                        <td><input type="submit" value="Download File" formtarget="_blank" class="form-control"></td>
+                    {% endif %}
 
-</form>
-</tr>
+                </form>
+                </tr>
 
-{% endfor %}
-</table>
-</div>
+            {% endfor %}
+            {% if prev_url %}
+                <a href="{{ prev_url }}">Previous</a>
+            {% endif %}
+            {% if next_url %}
+                <a href="{{ next_url }}">Next</a>
+            {% endif %}
+        </table>
+    </div>
 {% endblock %}

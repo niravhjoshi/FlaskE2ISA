@@ -36,16 +36,25 @@ def invest_add():
     if form.validate_on_submit():
         # file_upld = request.files()
         per_id = Persons.query.filter_by(u_id=current_user.id, id=form.Inv_per_name.data).all()
-        InvestRow = Investments(per_id=per_id[0].id, U_id=current_user.id,
+        if form.Inv_img.data is None:
+            InvestRow = Investments(per_id=per_id[0].id, U_id=current_user.id,
                                 Inv_per_name=dict(form.Inv_per_name.choices).get(form.Inv_per_name.data),
                                 Inv_type_name=dict(form.Inv_type_name.choices).get(form.Inv_type_name.data),
                                 Inv_init_amt=form.Inv_init_amt.data, Inv_mat_amt=form.Inv_mat_amt.data,
                                 Inv_ROI_PerYear=form.Inv_roiper_amt.data,
                                 Inv_date=form.Inv_date.data, Inv_mat_date=form.Inv_Mat_date.data,
-                                Inv_due_date=form.Inv_due_date.data,
-                                Inv_Filename=form.Inv_img.data.filename,
-                                Inv_img=form.Inv_img.data.read(), Inv_comm=form.Inv_comm.data)
+                                Inv_due_date=form.Inv_due_date.data,Inv_comm=form.Inv_comm.data)
 
+        else:
+            InvestRow = Investments(per_id=per_id[0].id, U_id=current_user.id,
+                                    Inv_per_name=dict(form.Inv_per_name.choices).get(form.Inv_per_name.data),
+                                    Inv_type_name=dict(form.Inv_type_name.choices).get(form.Inv_type_name.data),
+                                    Inv_init_amt=form.Inv_init_amt.data, Inv_mat_amt=form.Inv_mat_amt.data,
+                                    Inv_ROI_PerYear=form.Inv_roiper_amt.data,
+                                    Inv_date=form.Inv_date.data, Inv_mat_date=form.Inv_Mat_date.data,
+                                    Inv_due_date=form.Inv_due_date.data,
+                                    Inv_Filename=form.Inv_img.data.filename,
+                                    Inv_img=form.Inv_img.data.read(), Inv_comm=form.Inv_comm.data)
         db.session.add(InvestRow)
         db.session.commit()
         flash("Invest Entry and file has been Saved Fine")
@@ -56,8 +65,11 @@ def invest_add():
 @bp.route('/investments/inv_list', methods=['GET','POST'])
 @login_required
 def invest_list():
-    investlist = Investments.query.filter_by(U_id=current_user.id).all()
-    return render_template('investment/inv_list.html', viewinv=investlist)
+    page = request.args.get('page', 1, type=int)
+    investlist = Investments.query.filter_by(U_id=current_user.id).order_by(Investments.Inv_date.desc()).paginate(page, app.config['RECORDS_PER_PAGE'], False)
+    next_url = url_for('investments.invest_list', page=investlist.next_num) if investlist.has_next else None
+    prev_url = url_for('investments.invest_list', page=investlist.prev_num) if investlist.has_prev else None
+    return render_template('investment/inv_list.html', viewinv=investlist.items, next_url=next_url,prev_url=prev_url)
 
 
 @bp.route('/investments/download<int:id>', methods=['GET'])

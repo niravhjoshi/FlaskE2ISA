@@ -1,15 +1,16 @@
 import os
 
-
 basedir = os.path.abspath(os.path.dirname(__file__))
-#load_dotenv(os.path.join(basedir, '.env'))
+
+
+# load_dotenv(os.path.join(basedir, '.env'))
 
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
                               'mysql+pymysql://root:root@localhost/e2isa'
-
+    RECORDS_PER_PAGE = 4
     OAUTHLIB_INSECURE_TRANSPORT = 1
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = os.environ.get('MAIL_SERVER') or 'email-smtp.us-west-2.amazonaws.com"'
@@ -30,7 +31,7 @@ class Config(object):
             'id': 'R0qItN9CYMW3YYZXPq39rRMvh',
             'secret': 'RnPLRYzZOTB0yXFWjkVvlgaJf3qPkBkMpS949bC6WtKYMpXrVF'
         },
-        'github':{
+        'github': {
             'id': '3RzWQclolxWZIMq5LJqzRZPTl',
             'secret': 'm9TEd58DSEtRrZHpz2EjrV9AhsBRxKMo8m3kuIZj3zLwzwIimt'
         }

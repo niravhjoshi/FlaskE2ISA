@@ -1,6 +1,6 @@
 from app import app, db
 from flask import render_template, flash, redirect, url_for, request, send_file
-from app.shares.forms import SharesEntryForm,SharesEditForm
+from app.shares.forms import SharesEntryForm, SharesEditForm
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
@@ -10,6 +10,7 @@ from ..models.Person_model import Persons
 from app.shares import bp
 from base64 import b64encode
 from io import BytesIO
+
 
 # This deocrator function will ensure that if page is served it must have authenticated users
 
@@ -31,12 +32,21 @@ def share_add():
     if form.validate_on_submit():
         # file_upld = request.files()
         per_id = Persons.query.filter_by(u_id=current_user.id, id=form.Share_per_name.data).all()
-        SharesRow = Shares(per_id=per_id[0].id, U_id=current_user.id,
-                                Share_per_name=dict(form.Share_per_name.choices).get(form.Share_per_name.data),
-                                Share_tick_name=form.Share_tick_name.data,Share_Count=form.Share_Count.data,
-                                Share_tran_type=form.Share_tran_type.data,Share_pershare_amt=form.Share_pershare_amt.data,
-                                Share_inv_sell_date=form.Share_SellBuy_date.data,Share_img=form.Share_img.data.read(),
-                                Share_FileName=form.Share_img.data.filename,Share_comm=form.Share_comm.data)
+        if form.Share_img.data is None:
+            SharesRow = Shares(per_id=per_id[0].id, U_id=current_user.id,
+                               Share_per_name=dict(form.Share_per_name.choices).get(form.Share_per_name.data),
+                               Share_tick_name=form.Share_tick_name.data, Share_Count=form.Share_Count.data,
+                               Share_tran_type=form.Share_tran_type.data,
+                               Share_pershare_amt=form.Share_pershare_amt.data,
+                               Share_inv_sell_date=form.Share_SellBuy_date.data, Share_comm=form.Share_comm.data)
+        else:
+            SharesRow = Shares(per_id=per_id[0].id, U_id=current_user.id,
+                               Share_per_name=dict(form.Share_per_name.choices).get(form.Share_per_name.data),
+                               Share_tick_name=form.Share_tick_name.data, Share_Count=form.Share_Count.data,
+                               Share_tran_type=form.Share_tran_type.data,
+                               Share_pershare_amt=form.Share_pershare_amt.data,
+                               Share_inv_sell_date=form.Share_SellBuy_date.data, Share_img=form.Share_img.data.read(),
+                               Share_FileName=form.Share_img.data.filename, Share_comm=form.Share_comm.data)
 
         db.session.add(SharesRow)
         db.session.commit()
@@ -45,18 +55,21 @@ def share_add():
     return render_template('share/share_add.html', title='Add Expense', form=form)
 
 
-@bp.route('/shares/share_list', methods=['GET','POST'])
+@bp.route('/shares/share_list', methods=['GET', 'POST'])
 @login_required
 def share_list():
-    shareslist = Shares.query.filter_by(U_id=current_user.id).all()
-    return render_template('share/share_list.html', viewshare=shareslist)
+    page = request.args.get('page', 1, type=int)
+    shareslist = Shares.query.filter_by(U_id=current_user.id).order_by(Shares.Share_inv_sell_date.desc()).paginate(page,app.config['RECORDS_PER_PAGE'], False)
+    next_url = url_for('shares.list_expenses', page=shareslist.next_num) if shareslist.has_next else None
+    prev_url = url_for('shares.list_expenses', page=shareslist.prev_num) if shareslist.has_prev else None
+    return render_template('share/share_list.html', viewshare=shareslist.items, next_url=next_url, prev_url=prev_url)
 
 
 @bp.route('/shares/download<int:id>', methods=['GET'])
 @login_required
 def share_download(id):
     perid = request.args.get("perID")
-    share = Shares.query.filter_by(per_id=perid, U_id=current_user.id,id=id).all()
+    share = Shares.query.filter_by(per_id=perid, U_id=current_user.id, id=id).all()
     filebuff = share[0].Share_img
     filename = share[0].Share_FileName
     return send_file(BytesIO(filebuff), attachment_filename=filename)

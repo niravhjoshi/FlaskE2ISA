@@ -34,8 +34,11 @@ def addExpType():
 @bp.route('/addExpType/ListExpTypes',methods =['GET','POST'])
 @login_required
 def ListExpTypes():
-    ExpTypes = ExpType.query.filter_by(u_id=current_user.id).all()
-    return render_template('addExpense/Exp_typeList.html', vieweartype=ExpTypes)
+    page = request.args.get('page', 1, type=int)
+    ExpTypes = ExpType.query.filter_by(u_id=current_user.id).order_by(ExpType.ExpType_cdate.desc()).paginate(page, app.config['RECORDS_PER_PAGE'], False)
+    next_url = url_for('addExpType.ListExpTypes', page=ExpTypes.next_num) if ExpTypes.has_next else None
+    prev_url = url_for('addExpType.ListExpTypes', page=ExpTypes.prev_num) if ExpTypes.has_prev else None
+    return render_template('addExpense/Exp_typeList.html', vieweartype=ExpTypes.items,next_url=next_url,prev_url=prev_url)
 
 
 #This function will Edit Earning types in DB

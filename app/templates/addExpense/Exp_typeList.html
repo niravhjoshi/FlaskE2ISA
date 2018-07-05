@@ -1,23 +1,29 @@
 {% extends "base.html" %}
 {% block app_content %}
 
-<div class="col-md-4">
- <h1>E2ISA Expense Type List:</h1>
-<table class="table table-striped">
-<tr>
-<th>Expense Type</th>
-    <th>Edit</th>
-</tr>
-{% for exptypes in vieweartype %}
-    <form class="form-inline" action="/addExpType/EditExpType">
-<tr>
-    <input type="text" name="exp_id" value="{{exptypes.id}}" hidden>
-    <td>{{exptypes.ExpType_name}}</td>
-    <td><input type="submit" value="Edit" class="form-control"></td>
-</tr>
- </form>
-{% endfor %}
-</table>
+    <div class="col-md-4">
+        <h1>E2ISA Expense Type List:</h1>
+        <table class="table table-striped">
+            <tr>
+                <th>Expense Type</th>
+                <th>Edit</th>
+            </tr>
+            {% for exptypes in vieweartype %}
+                <form class="form-inline" action="/addExpType/EditExpType">
+                    <tr>
+                        <input type="text" name="exp_id" value="{{ exptypes.id }}" hidden>
+                        <td>{{ exptypes.ExpType_name }}</td>
+                        <td><input type="submit" value="Edit" class="form-control"></td>
+                    </tr>
+                </form>
+            {% endfor %}
+            {% if prev_url %}
+                <a href="{{ prev_url }}">Previous</a>
+            {% endif %}
+            {% if next_url %}
+                <a href="{{ next_url }}">Next</a>
+            {% endif %}
+        </table>
 
-</div>
+    </div>
 {% endblock %}

@@ -12,12 +12,11 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
-migrate = Migrate(app,db)
+migrate = Migrate(app, db)
 loginMan = LoginManager(app)
 loginMan.login_view = 'auth.login'
 loginMan.login_message = ('Please log in to access this page.')
 loginMan.session_protection = "strong"
-
 
 # Mail configuration for Error loging
 if not app.debug:
@@ -36,7 +35,7 @@ if not app.debug:
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
 
-#Error loging to Error log file
+    # Error loging to Error log file
     if not os.path.exists('logs'):
         os.mkdir('logs')
     file_handler = RotatingFileHandler('logs/E2ISA_log.log', maxBytes=10240,
@@ -49,8 +48,6 @@ if not app.debug:
     app.logger.setLevel(logging.DEBUG)
     app.logger.info('E2ISA App startup')
 
-
-
 from models.Share_model import Shares
 from models.Investment_model import Investments
 from models.Users_model import User
@@ -61,26 +58,37 @@ from models.ExpType_model import ExpType
 from models.Investtype_model import InvType
 from models.Person_model import Persons
 
-#Blueprint Import with all blueprint available
+# Blueprint Import with all blueprint available
 from app.shares import bp as shares
 app.register_blueprint(shares)
 from app.investments import bp as investments
+
 app.register_blueprint(investments)
 from app.expenses import bp as expenses
+
 app.register_blueprint(expenses)
 from app.earnings import bp as earning
+
 app.register_blueprint(earning)
 from app.auth import bp as auth
+
 app.register_blueprint(auth)
-from app.error  import bp as error
+from app.error import bp as error
+
 app.register_blueprint(error)
 from app.main import bp as main
+
 app.register_blueprint(main)
 from app.addEPES import bp as addEPES
+
 app.register_blueprint(addEPES)
 from app.addEarnType import bp as addEarnType
+
 app.register_blueprint(addEarnType)
 from app.addExpType import bp as addExpType
+
 app.register_blueprint(addExpType)
 from app.addInvType import bp as addInvType
+
 app.register_blueprint(addInvType)
+from app.addInvType import  bp as addInvType

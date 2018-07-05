@@ -34,12 +34,22 @@ def exp_add():
     if form.validate_on_submit():
         #file_upld = request.files()
         per_id = Persons.query.filter_by(u_id=current_user.id,id=form.Exp_per_name.data).all()
-        expenseRow = Expenses(per_id=per_id[0].id,U_id=current_user.id,
+        if form.Exp_img.data is None:
+
+            expenseRow = Expenses(per_id=per_id[0].id,U_id=current_user.id,
+                              Exp_per_name=dict(form.Exp_per_name.choices).get(form.Exp_per_name.data),
+                              Exp_type_name=dict(form.Exp_type_name.choices).get(form.Exp_type_name.data),
+                              Exp_amt=form.Exp_amt.data,
+                              Exp_date=form.Exp_date.data,Exp_comm=form.Exp_comm.data)
+        else:
+
+            expenseRow = Expenses(per_id=per_id[0].id,U_id=current_user.id,
                               Exp_per_name=dict(form.Exp_per_name.choices).get(form.Exp_per_name.data),
                               Exp_type_name=dict(form.Exp_type_name.choices).get(form.Exp_type_name.data),
                               Exp_amt=form.Exp_amt.data,
                               Exp_date=form.Exp_date.data,Exp_FileName=form.Exp_img.data.filename,
                               Exp_img=form.Exp_img.data.read(),Exp_comm=form.Exp_comm.data)
+
         db.session.add(expenseRow)
         db.session.commit()
         flash("Expense Entry and file has been Saved Fine")
@@ -49,10 +59,11 @@ def exp_add():
 @bp.route('/expenses/list_exp',methods=['GET','POST'])
 @login_required
 def list_expenses():
-    expenses = Expenses.query.filter_by(U_id=current_user.id).all()
-    return render_template('expense/exp_List.html', viewexp=expenses)
-
-
+    page = request.args.get('page', 1, type=int)
+    expenses = Expenses.query.filter_by(U_id=current_user.id).order_by(Expenses.Exp_date.desc()).paginate(page, app.config['RECORDS_PER_PAGE'], False)
+    next_url = url_for('expenses.list_expenses', page=expenses.next_num) if expenses.has_next else None
+    prev_url = url_for('expenses.list_expenses', page=expenses.prev_num) if expenses.has_prev else None
+    return render_template('expense/exp_List.html',viewexp=expenses.items, next_url=next_url,prev_url=prev_url)
 
 @bp.route('/expenses/download<int:id>',methods=['GET'])
 @login_required
