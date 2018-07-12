@@ -1,5 +1,5 @@
 from app import app,db
-from flask import render_template,flash, redirect, url_for, request
+from flask import render_template,flash, redirect, url_for, request,jsonify, g, current_app
 from forms import LoginForm,RegistrationForm,EditProfileForm
 from flask_login import current_user, login_user,logout_user,login_required
 from app.models.Users_model import User
@@ -7,6 +7,7 @@ from flask_login import login_user, logout_user, current_user, login_required,Us
 from requests_oauthlib import OAuth2Session
 from requests.exceptions import HTTPError
 import json
+from flask_httpauth import HTTPBasicAuth
 from app.auth import bp
 
 #This decorator function witll implement login method

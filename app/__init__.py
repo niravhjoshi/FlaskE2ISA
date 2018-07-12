@@ -1,9 +1,11 @@
-from flask import Flask
+from flask import  Flask, jsonify, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from flask_login import current_user, login_user, logout_user, login_required
 from app.config import Config
+from app.decorators import json, no_cache, rate_limit
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
@@ -58,37 +60,33 @@ from models.ExpType_model import ExpType
 from models.Investtype_model import InvType
 from models.Person_model import Persons
 
-# Blueprint Import with all blueprint available
+#Blue Prints imports
+from app.api_v1 import bp as apiV1
 from app.shares import bp as shares
-app.register_blueprint(shares)
 from app.investments import bp as investments
-
-app.register_blueprint(investments)
 from app.expenses import bp as expenses
-
-app.register_blueprint(expenses)
 from app.earnings import bp as earning
-
-app.register_blueprint(earning)
 from app.auth import bp as auth
-
-app.register_blueprint(auth)
 from app.error import bp as error
-
-app.register_blueprint(error)
-from app.main import bp as main
-
-app.register_blueprint(main)
 from app.addEPES import bp as addEPES
-
-app.register_blueprint(addEPES)
+from app.main import bp as main
 from app.addEarnType import bp as addEarnType
-
-app.register_blueprint(addEarnType)
 from app.addExpType import bp as addExpType
-
-app.register_blueprint(addExpType)
 from app.addInvType import bp as addInvType
 
+# Blueprint Import with all blueprint available
+app.register_blueprint(shares)
+app.register_blueprint(investments)
+app.register_blueprint(expenses)
+app.register_blueprint(earning)
+app.register_blueprint(auth)
+app.register_blueprint(error)
+app.register_blueprint(main)
+app.register_blueprint(addEPES)
+app.register_blueprint(addEarnType)
+app.register_blueprint(addExpType)
 app.register_blueprint(addInvType)
-from app.addInvType import  bp as addInvType
+app.register_blueprint(apiV1)
+
+
+

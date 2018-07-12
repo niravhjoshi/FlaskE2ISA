@@ -42,6 +42,20 @@ class User(UserMixin,db.Model):
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
 
+    def generate_auth_token(self, expires_in=3600):
+        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expires_in)
+        return s.dumps({'id': self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except:
+            return None
+        return User.query.get(data['id'])
+
+
 # Load user function will load users details from DB to application memeory
 @loginMan.user_loader
 def load_user(id):
@@ -55,21 +69,3 @@ def load_user(id):
 
 
 
-
-'''
-# This module may used in API frame work once we expose API
-
-def generate_auth_token(self, expires_in=3600):
-    s = Serializer(current_app.config['SECRET_KEY'], expires_in=expires_in)
-    return s.dumps({'id': self.id}).decode('utf-8')
-
-@staticmethod
-def verify_auth_token(token):
-    s = Serializer(current_app.config['SECRET_KEY'])
-    try:
-        data = s.loads(token)
-    except:
-        return None
-    return User.query.get(data['id'])
-
-'''

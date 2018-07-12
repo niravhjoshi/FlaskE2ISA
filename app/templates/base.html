@@ -20,34 +20,68 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('main.index') }}">{{ 'Home' }}</a></li>
-                    <li>
-                        <a href="{{ url_for('expenses.exp_add') }}">{{ 'Expense Add' }}</a>
-                        <a href="{{ url_for('expenses.list_expenses') }}">{{ 'Expense List' }}</a>
-                        <a href="{{ url_for('addExpType.addExpType') }}">{{ 'Expense Type Add' }}</a>
-                        <a href="{{ url_for('addExpType.ListExpTypes') }}">{{ 'Expense Type List' }}</a>
-                    </li>
-                    <li>
-                    <a href="{{ url_for('earnings.earn_add') }}">{{ 'Earnings Add' }}</a>
-                    <a href="{{ url_for('earnings.list_earning') }}">{{ 'Earnings List' }}</a>
-                        <a href="{{ url_for('addEarnType.addEarnType') }}">{{ 'Earnings Type Add' }}</a>
-                    <a href="{{ url_for('addEarnType.ListEarningType') }}">{{ 'Earnings Type List' }}</a>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Expenses<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('expenses.exp_add') }}">{{ 'Expense Add' }}</a></li>
+                            <li><a href="{{ url_for('expenses.list_expenses') }}">{{ 'Expense List' }}</a></li>
+                            <li><a href="{{ url_for('addExpType.addExpType') }}">{{ 'Expense Type Add' }}</a></li>
+                            <li><a href="{{ url_for('addExpType.ListExpTypes') }}">{{ 'Expense Type List' }}</a></li>
+
+                        </ul>
                     </li>
 
-                    <li>
-                    <a href="{{ url_for('investments.invest_list') }}">{{ 'Investments List' }}</a>
-                        <a href="{{ url_for('investments.invest_add') }}">{{ 'Investments Add' }}</a>
-                        <a href="{{ url_for('addInvType.ListInvTypes') }}">{{ 'Investments Type List' }}</a>
-                        <a href="{{ url_for('addInvType.addInvType') }}">{{ 'Investments Type Add' }}</a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Earnings<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('earnings.earn_add') }}">{{ 'Earnings Add' }}</a></li>
+                            <li><a href="{{ url_for('earnings.list_earning') }}">{{ 'Earnings List' }}</a></li>
+                            <li><a href="{{ url_for('addEarnType.addEarnType') }}">{{ 'Earnings Type Add' }}</a></li>
+                            <li><a href="{{ url_for('addEarnType.ListEarningType') }}">{{ 'Earnings Type List' }}</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="{{ url_for('shares.share_add') }}">{{ 'Shares Add' }}</a>
-                        <a href="{{ url_for('shares.share_list') }}">{{ 'Shares List' }}</a>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Investments<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('investments.invest_list') }}">{{ 'Investments List' }}</a></li>
+                            <li><a href="{{ url_for('investments.invest_add') }}">{{ 'Investments Add' }}</a></li>
+                            <li><a href="{{ url_for('addInvType.ListInvTypes') }}">{{ 'Investments Type List' }}</a>
+                            </li>
+                            <li><a href="{{ url_for('addInvType.addInvType') }}">{{ 'Investments Type Add' }}</a></li>
+                        </ul>
                     </li>
-                    <li><a href="{{ url_for('main.index') }}">{{ 'Analytics' }}</a></li>
-                    <li>
-                        <a href="{{ url_for('addEPES.ListPersons')}}">{{ 'List Users' }}</a>
-                    <a href="{{ url_for('addEPES.addPersonNames')}}">{{ 'Add Users' }}</a>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Investments<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('shares.share_add') }}">{{ 'Shares Add' }}</a></li>
+                            <li><a href="{{ url_for('shares.share_list') }}">{{ 'Shares List' }}</a></li>
+                        </ul>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Analytics<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('main.index') }}">{{ 'Analytics' }}</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">Persons<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url_for('addEPES.ListPersons') }}">{{ 'List Users' }}</a></li>
+                            <li><a href="{{ url_for('addEPES.addPersonNames') }}">{{ 'Add Users' }}</a></li>
+                        </ul>
+                    </li>
+
                     <li><a href="{{ url_for('main.index') }}">{{ 'About US' }}</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

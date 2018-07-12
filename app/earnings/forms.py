@@ -5,7 +5,7 @@ from app.models.Earning_model import Earnings
 from app.models.Person_model import Persons
 from app.models.Eartype_model import EarType
 from wtforms.fields.html5 import DateField
-from flask_wtf.file import FileField
+from flask_wtf.file import FileField,FileAllowed
 from wtforms_sqlalchemy.fields import QuerySelectField
 from flask_login import current_user, login_user,logout_user,login_required
 from app import app,db
@@ -26,7 +26,7 @@ class EarningEntryForm(FlaskForm):
     Ear_amt = FloatField('Earning Amount:-',validators=[DataRequired()])
     Ear_date = DateField('Earning Date:-',format = '%Y-%m-%d',validators=[DataRequired()])
     Ear_FileName = StringField('Earning FileName:-')
-    Ear_img = FileField('Earning Proof File:-')
+    Ear_img = FileField('Earning Proof File:-',validators=[FileAllowed(['jpg','pdf','jpeg','png'],'Images and PDF only')])
     Ear_comm = TextAreaField('Earning Comment:-',validators=[DataRequired()])
     submit = SubmitField('Save Earning')
 
@@ -37,7 +37,7 @@ class EarningEditForm(FlaskForm):
     Ear_amt = FloatField('Earning Amount:-', validators=[DataRequired()])
     Ear_date = DateField('Earning Date:-', format='%Y-%m-%d', validators=[DataRequired()])
     Ear_FileName = StringField('Earning FileName:-',validators=[DataRequired()])
-    Ear_img = FileField('Earning Proof File:-')
+    Ear_img = FileField('Earning Proof File:-',validators=[FileAllowed(['jpg','pdf','jpeg','png'],'Images and PDF only')])
     Ear_comm = TextAreaField('Earning Comment:-', validators=[DataRequired()])
     submit = SubmitField('Submit')
     Delete = SubmitField('Delete')

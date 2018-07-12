@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm,Form
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,SelectField,DateField,TextAreaField,FloatField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo,Length
 from wtforms.fields.html5 import DateField
-from flask_wtf.file import FileField
+from flask_wtf.file import FileField,FileAllowed
 from wtforms_sqlalchemy.fields import QuerySelectField
 from flask_login import current_user, login_user,logout_user,login_required
 from app import app,db
@@ -18,7 +18,7 @@ class SharesEntryForm(FlaskForm):
     Share_pershare_amt = FloatField('PerShare Amount:-', validators=[DataRequired()])
     Share_SellBuy_date = DateField('Share Sell or Buy Date:-',format = '%Y-%m-%d',validators=[DataRequired()])
     Share_FileName = StringField('FileName:-')
-    Share_img = FileField('Share Proof File:-')
+    Share_img = FileField('Share Proof File:-',validators=[FileAllowed(['jpg','pdf','jpeg','png'],'Images and PDF only')])
     Share_comm = TextAreaField('Share Comment:-',validators=[DataRequired()])
     submit = SubmitField('Save Shares')
 
@@ -31,7 +31,7 @@ class SharesEditForm(FlaskForm):
     Share_pershare_amt = FloatField('PerShare Amount:-', validators=[DataRequired()])
     Share_SellBuy_date = DateField('Share Sell or Buy Date:-', format='%Y-%m-%d', validators=[DataRequired()])
     Share_FileName = StringField('FileName:-')
-    Share_img = FileField('Share Proof File:-')
+    Share_img = FileField('Share Proof File:-',validators=[FileAllowed(['jpg','pdf','jpeg','png'],'Images and PDF only')])
     Share_comm = TextAreaField('Share Comment:-', validators=[DataRequired()])
     submit = SubmitField('Submit')
     Delete = SubmitField('Delete')

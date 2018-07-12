@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm,Form
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,SelectField,DateField,TextAreaField,FloatField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo,Length
 from wtforms.fields.html5 import DateField
-from flask_wtf.file import FileField
+from flask_wtf.file import FileField,FileAllowed
 from wtforms_sqlalchemy.fields import QuerySelectField
 from flask_login import current_user, login_user,logout_user,login_required
 from app import app,db
@@ -20,7 +20,7 @@ class InvestEntryForm(FlaskForm):
     Inv_Mat_date = DateField('Investment Mature Date:-', format='%Y-%m-%d', validators=[DataRequired()])
     Inv_due_date = DateField('Investment Due Date:-', format='%Y-%m-%d', validators=[DataRequired()])
     Inv_FileName = StringField('FileName:-')
-    Inv_img = FileField('Investment Proof File:-')
+    Inv_img = FileField('Investment Proof File:-',validators=[FileAllowed(['jpg','pdf','jpeg','png'],'Images and PDF only')])
     Inv_comm = TextAreaField('Investment Comment:-',validators=[DataRequired()])
     submit = SubmitField('Save Investment')
 
@@ -34,7 +34,7 @@ class InvestEditForm(FlaskForm):
     Inv_date = DateField('Investment Date:-', format='%Y-%m-%d', validators=[DataRequired()])
     Inv_Mat_date = DateField('Investment Mature Date:-', format='%Y-%m-%d', validators=[DataRequired()])
     Inv_due_date = DateField('Investment Due Date:-', format='%Y-%m-%d', validators=[DataRequired()])
-    Inv_FileName = StringField('FileName:-')
+    Inv_FileName = StringField('FileName:-',validators=[FileAllowed(['jpg','pdf','jpeg','png'],'Images and PDF only')])
     Inv_img = FileField('Investment Proof File:-')
     Inv_comm = TextAreaField('Investment Comment:-', validators=[DataRequired()])
     submit = SubmitField('Submit')
