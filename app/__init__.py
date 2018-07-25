@@ -3,17 +3,22 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from marshmallow import Schema, fields, pre_load, validate
+from flask_marshmallow import Marshmallow
 from flask_login import current_user, login_user, logout_user, login_required
 from app.config import Config
 from app.decorators import json, no_cache, rate_limit
 import logging
+from flask import Blueprint
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
+from flask_restful import Api
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
+ma = Marshmallow(app)
 migrate = Migrate(app, db)
 loginMan = LoginManager(app)
 loginMan.login_view = 'auth.login'
@@ -61,7 +66,7 @@ from models.Investtype_model import InvType
 from models.Person_model import Persons
 
 #Blue Prints imports
-from app.api_v1 import bp as apiV1
+from app.resourcesapi import api_bp as apinew
 from app.shares import bp as shares
 from app.investments import bp as investments
 from app.expenses import bp as expenses
@@ -73,6 +78,8 @@ from app.main import bp as main
 from app.addEarnType import bp as addEarnType
 from app.addExpType import bp as addExpType
 from app.addInvType import bp as addInvType
+from app.api_v1 import bp as apiV1
+
 
 # Blueprint Import with all blueprint available
 app.register_blueprint(shares)
@@ -87,6 +94,6 @@ app.register_blueprint(addEarnType)
 app.register_blueprint(addExpType)
 app.register_blueprint(addInvType)
 app.register_blueprint(apiV1)
+app.register_blueprint(apinew,url_prefix='/apinew')
 
-
-
+#API Routes

@@ -24,11 +24,20 @@ class Config(object):
     LANGUAGES = ['en', 'es']
     MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
     POSTS_PER_PAGE = 25
+    OAUTH_CREDENTIALS_GOOGLE_ID ='33511635428-s6l2u5vicfqnd91c8sim6e1ktsdcgm3u.apps.googleusercontent.com'
+    OAUTH_CREDENTIALS_GOOGLE_SECRET = 'eqSfdnNgBLOr4OJzH9OXdGoo'
+    AUTHORISATION_BASE_URL = "https://accounts.google.com/o/oauth2/auth"
+    TOKEN_URL = "https://accounts.google.com/o/oauth2/token"
+    refresh_url = TOKEN_URL  # True for Google but not all providers.
+    SCOPE = ['profile', 'email']
+    REDIRECT_URI = 'http://127.0.0.1:5000/callback'
+
+    '''
     OAUTH_CREDENTIALS = {
         'Google': {
             'id': '33511635428-s6l2u5vicfqnd91c8sim6e1ktsdcgm3u.apps.googleusercontent.com',
             'secret': 'eqSfdnNgBLOr4OJzH9OXdGoo'
-        },
+        }
         'twitter': {
             'id': 'R0qItN9CYMW3YYZXPq39rRMvh',
             'secret': 'RnPLRYzZOTB0yXFWjkVvlgaJf3qPkBkMpS949bC6WtKYMpXrVF'
@@ -38,3 +47,4 @@ class Config(object):
             'secret': 'm9TEd58DSEtRrZHpz2EjrV9AhsBRxKMo8m3kuIZj3zLwzwIimt'
         }
     }
+    '''

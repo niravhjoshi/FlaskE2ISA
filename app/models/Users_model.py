@@ -17,14 +17,13 @@ class User(UserMixin,db.Model):
     __tablename__ = 'Users'
     __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
-    social_id = db.Column(db.String(64), nullable=True, unique=True)
-    pwd_hash = db.Column(db.String(512))
     nickname = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=True)
+    auth_token = db.Column(db.Text,nullable=False)
+    refresh_token= db.Column(db.Text,nullable=False)
+    expires_in = db.Column(db.Integer,nullable=False)
     cdate = db.Column(db.DateTime, default=datetime.utcnow())
     ladate = db.Column(db.DateTime, default=datetime.utcnow())
-    mob = db.Column(db.BigInteger, unique=True, nullable=True)
-    confirmed = db.Column(db.Boolean, default=False)
     PersonName= db.relationship('Persons',backref='persor',lazy='dynamic')
     EarType = db.relationship('EarType',backref='eartypefk',lazy='dynamic')
     InvType = db.relationship('InvType',backref='invtypefk',lazy='dynamic')
@@ -42,18 +41,7 @@ class User(UserMixin,db.Model):
         return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
             digest, size)
 
-    def generate_auth_token(self, expires_in=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_in=expires_in)
-        return s.dumps({'id': self.id}).decode('utf-8')
 
-    @staticmethod
-    def verify_auth_token(token):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        try:
-            data = s.loads(token)
-        except:
-            return None
-        return User.query.get(data['id'])
 
 
 # Load user function will load users details from DB to application memeory

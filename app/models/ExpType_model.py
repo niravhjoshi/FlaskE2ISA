@@ -19,10 +19,12 @@ class ExpType(db.Model):
     def json(self):
         return {'ExpenseType':self.ExpType_name,'id':self.id,'U_id':self.u_id}
 
+    @staticmethod
     def add_expense_type(_expType):
         new_expType = ExpType(u_id=current_user.id, ExpType_name=_expType)
         db.session.add(new_expType)
         db.session.commit()
+        return "New Recordd Created"
 
     @staticmethod
     def get_all_exptypes():
@@ -30,18 +32,32 @@ class ExpType(db.Model):
 
     @staticmethod
     def get_single_expType(_id):
-        return [ExpType.json(ExpType.query.filter_by(u_id=current_user.id,id =_id).first())]
+        if ExpType.query.filter_by(u_id=current_user.id,id =_id).first() is None:
+            return "Sorry No records found with this ID"
+        else:
+            return [ExpType.json(ExpType.query.filter_by(u_id=current_user.id,id =_id).first())]
 
     @staticmethod
     def delete_expType(_id):
-        ExpType.query.filter_by(u_id=current_user.id , id = _id).delete()
-        db.session.commit()
+        if ExpType.query.filter_by(u_id=current_user.id , id = _id) is None:
+            return "Sorry No records found with this ID can not delete"
+        else:
+            ExpType.query.filter_by(u_id=current_user.id , id = _id).delete()
+            db.session.commit()
+            return "Record Deleted."
 
     @staticmethod
-    def update_expType(_id,_expTypeName):
-        ExpName_toUpdate=ExpType.query.filter_by(u_id=current_user.id ,id = _id).first()
-        ExpName_toUpdate.ExpType_name=_expTypeName
-        db.session.commit()
+    def update_expType(id,exp_type):
+
+        ExpName_toUpdate=ExpType.query.filter_by(u_id=current_user.id ,id = id).first()
+        if ExpName_toUpdate is None:
+            return "Sorry No records found with this ID can not update"
+        else:
+            ExpName_toUpdate.ExpType_name=exp_type
+            db.session.commit()
+            return "Record updated fine"
+
+
     def __repr__(self):
         exp_type_object={
             'ExpTypeName':self.ExpType_name,
