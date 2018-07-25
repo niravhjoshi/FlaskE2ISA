@@ -66,7 +66,7 @@ from models.Investtype_model import InvType
 from models.Person_model import Persons
 
 #Blue Prints imports
-from app.resourcesapi import api_bp as apinew
+from app.resourcesapi import api_bp as apiV2
 from app.shares import bp as shares
 from app.investments import bp as investments
 from app.expenses import bp as expenses
@@ -94,6 +94,6 @@ app.register_blueprint(addEarnType)
 app.register_blueprint(addExpType)
 app.register_blueprint(addInvType)
 app.register_blueprint(apiV1)
-app.register_blueprint(apinew,url_prefix='/apinew')
+app.register_blueprint(apiV2,url_prefix='/apiV2')
 
 #API Routes

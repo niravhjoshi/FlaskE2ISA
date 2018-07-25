@@ -22,19 +22,21 @@ class Persons(db.Model):
     Earner = db.relationship('Earnings', backref='earner', lazy='dynamic')
 
 
-    def __init__(self, _per_name, _per_sex,_per_bdate):
-        self.per_name = _per_name
-        self.per_sex = _per_sex
-        self.per_bdate =_per_bdate
+    def __init__(self, u_id,per_name, per_sex,per_bdate):
+        self.u_id =u_id
+        self.per_name = per_name
+        self.per_sex = per_sex
+        self.per_bdate =per_bdate
 
 
 class PersonSchema(ma.Schema):
     class Meta:
         model = Persons
     id = fields.Integer(dump_only=True)
+    u_id = fields.Integer(dump_only=True)
     per_name = fields.String(required=True)
     per_sex = fields.String(required=True, validate=validate.Length(1))
-    per_bdate = fields.DateTime()
+    per_bdate = fields.Date()
 
 
 '''
