@@ -1,11 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
-from app import db
+from app import db,ma
 from datetime import datetime
 from app.utils.exceptions import ValidationError
 from flask import url_for, current_app,json
 from datetime import datetime
 from dateutil import parser as datetime_parser
 from flask_login import current_user
+from marshmallow import Schema, fields, pre_load, validate
 
 class ExpType(db.Model):
     __tablename__ = 'ExpType'
@@ -16,6 +17,19 @@ class ExpType(db.Model):
     ExpType_name = db.Column(db.String(64), index=True)
     ExpType_cdate = db.Column(db.DateTime, default=datetime.utcnow())
 
+    def __init__(self,ExpType_name,u_id):
+        self.ExpType_name= ExpType_name,
+        self.u_id= u_id
+
+class ExpTypeSchema(ma.Schema):
+    class Meta:
+        model = ExpType
+    id = fields.Integer(dump_only=True)
+    u_id = fields.Integer(dump_only=True)
+    ExpType_name = fields.String(required=True)
+
+
+'''
     def json(self):
         return {'ExpenseType':self.ExpType_name,'id':self.id,'U_id':self.u_id}
 
@@ -65,3 +79,4 @@ class ExpType(db.Model):
             'UserID':self.u_id
         }
         return json.dumps(exp_type_object)
+'''

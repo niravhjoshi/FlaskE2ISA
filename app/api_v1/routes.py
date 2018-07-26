@@ -16,7 +16,7 @@ from app.models.Expense_model import Expenses
 from app.models.Share_model import Shares
 import  json
 
-
+'''
 #################
 #ExpenseType API#
 #################
@@ -74,11 +74,11 @@ def Update_singlExpType(id):
         return jsonify({'id': id},'Updated Sucess'), 200
 
 
-#################
-#Person API#
-#################
-'''
-#Get API Call for getting Persons for loged in user
+ #################
+ #Person API#
+ #################
+
+Get API Call for getting Persons for loged in user
 @bp.route('/api/V1/get_all_persons',methods =['GET'])
 @login_required
 def get_all_persons():
