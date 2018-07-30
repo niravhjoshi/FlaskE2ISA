@@ -1,8 +1,9 @@
 from flask_sqlalchemy  import SQLAlchemy
-from app import db
+from app import db,ma
 from datetime import datetime
 from app.utils.exceptions import ValidationError
 from flask import url_for, current_app
+from marshmallow import Schema, fields, pre_load, validate
 
 class InvType(db.Model):
     __tablename__ = 'InvType'
@@ -12,5 +13,13 @@ class InvType(db.Model):
     InvType_name = db.Column(db.String(64), index=True)
     InvType_cdate = db.Column(db.DateTime, default=datetime.utcnow())
 
-    def __repr__(self):
-        return '<InvType_name {}>'.format(self.InvType_name)
+    def __init__(self,InvType_name,u_id):
+        self.InvType_name= InvType_name,
+        self.u_id= u_id
+
+class InvestTypeSchema(ma.Schema):
+    class Meta:
+        model = InvType
+    id = fields.Integer(dump_only=True)
+    u_id = fields.Integer(dump_only=True)
+    InvType_name = fields.String(required=True)

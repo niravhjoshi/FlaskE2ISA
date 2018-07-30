@@ -1,9 +1,12 @@
 from flask_sqlalchemy  import SQLAlchemy
-from app import db
+from app import db,ma
 from datetime import datetime
 from flask import url_for, current_app
 from app.utils.exceptions import ValidationError
 from sqlalchemy.dialects.mysql import LONGBLOB
+from marshmallow import  fields, pre_load, validate
+from app.models.Person_model import PersonSchema
+from app.models.ExpType_model import ExpTypeSchema
 
 #This is model defination for the Expnese Table and its api calls with get post put all covered in here.
 class Expenses(db.Model):
@@ -20,28 +23,33 @@ class Expenses(db.Model):
     Exp_date = db.Column(db.DateTime,index=True)
     Exp_comm = db.Column(db.String(200))
 
-    def exp_get_url(self):
-        return url_for('get_expense', id=self.id, _external=True)
+    def __init__(self,per_id,U_id,Exp_per_name,Exp_type_name,Exp_amt,Exp_img,Exp_FileName,Exp_date,Exp_comm):
 
-    def exp_export_data(self):
-        return {
-            'self_url': self.exp_get_url(),
-            'name': self.Exp_per_name,
-            'type': self.Exp_type_name,
-            'amt': self.Exp_amt,
-            'date': self.Exp_date
-        }
+        self.U_id = U_id
+        self.per_id = per_id
+        self.Exp_per_name = Exp_per_name,
+        self.Exp_type_name = Exp_type_name,
+        self.Exp_amt = Exp_amt,
+        self.Exp_img = Exp_img,
+        self.Exp_FileName = Exp_FileName,
+        self.Exp_date = Exp_date,
+        self.Exp_comm = Exp_comm
+# Custom validator
+def must_not_be_blank(data):
+    if not data:
+        raise ValidationError('Data not provided.')
 
-    def exp_import_data(self, data):
-        try:
-            self.Exp_per_name = data['Exp_per_name'],
-            self.Exp_type_name =data['Exp_type_name'],
-            self.Exp_amt = data['Exp_amt'],
-            self.Exp_date = data['Exp_date'],
-            self.Exp_comm = data['Exp_comm']
+class ExpensesSchema(ma.Schema):
+    class Meta:
+        model = Expenses
+    id = fields.Integer(dump_only=True)
+    u_id = fields.Integer(dump_only=True)
+    Exp_per_name = fields.Nested(PersonSchema, validate=must_not_be_blank)
+    ExpType_name = fields.Nested(ExpTypeSchema,validate=must_not_be_blank)
+    Exp_amt =fields.Float(required=True)
+    Exp_img = fields.Raw()
+    Exp_FileName = fields.Str(allow_none=None)
+    Exp_comm = fields.Str(allow_none=None)
 
-        except KeyError as e:
-            raise ValidationError('Invalid Expense PersonName: missing ' + e.args[0])
-        return self
 
 
