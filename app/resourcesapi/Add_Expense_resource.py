@@ -1,12 +1,14 @@
-from flask_restplus  import  Resource
-import json
-import sys, os, logging, time, datetime, json, uuid, requests, ast
+from flask_restplus  import  Resource,reqparse
+import json,werkzeug
+from werkzeug.utils import secure_filename
+import sys, os, logging, time, datetime, json, uuid, requests, ast,dateutil
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import ImmutableMultiDict
 from flask import request
 from flask_login import current_user, login_required
 from app.models.Expense_model import Expenses, ExpensesSchema
 from datetime import datetime
+from sqlalchemy.exc import DatabaseError
 from app import db
 
 expenses_schema = ExpensesSchema(many=True)
@@ -15,6 +17,22 @@ expense_schema = ExpensesSchema()
 
 class ExpenseRes(Resource):
     # This is  method for all ExpTypes
+
+    '''
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        self.reqparse.add_argument('per_id', type=str, required=True, help='PerID name provided', location='jsondata')
+        self.reqparse.add_argument('U_id', type=str, required=True, help='UID name provided',location='jsondata')
+        self.reqparse.add_argument('PerName',type=str,required = True,help='No Person name provided',location='jsondata')
+        self.reqparse.add_argument('ExpTypeName',type=str,required = True,help='No Expense Type Provided',location='jsondata')
+        self.reqparse.add_argument('Exp_amt',type=float,required = True,help='No Expense Amount Provided',localtion='jsondata')
+        self.reqparse.add_argument('Exp_Img',type=werkzeug.datastructures.FileStorage,required = False,help='This is optional',location='filedata')
+        self.reqparse.add_argument('Exp_FileName',type=str,required= False,help='This is optional',location='filedata')
+        self.reqparse.add_argument('ExpDate',type=datetime,required = True,help='Expense Date is not provided',location='jsondata')
+        self.reqparse.add_argument('Exp_Comm',type=str,required=False,help='This is optional',location='jsondata')
+        super(ExpenseRes, self).__init__()
+    '''
+
     @classmethod
     @login_required
     def get(cls):
@@ -25,6 +43,83 @@ class ExpenseRes(Resource):
     # This is new records creation Persons
     @classmethod
     def post(cls):
+        RequestValues = request.values
+        files_data = request.files['filedata']
+        if not RequestValues:
+            return {'message': 'At least provide json input'}, 400
+        if not files_data:
+            print "No File is provided going without file."
+            print RequestValues
+            RequestForm = request.form
+            print RequestForm
+            so = RequestForm
+            json_of_metadatas = so.to_dict(flat=False)
+            print json_of_metadatas
+            MetdatasFromJSON = json_of_metadatas['jsondata']
+            print MetdatasFromJSON
+            MetdatasFromJSON0 = MetdatasFromJSON[0]
+            print MetdatasFromJSON0
+            strMetdatasFromJSON0 = str(MetdatasFromJSON0)
+            MetdatasDICT = ast.literal_eval(strMetdatasFromJSON0)
+            print MetdatasDICT
+            newexpense = Expenses(
+                U_id=current_user.id,
+                per_id=MetdatasDICT['per_id'],
+                Exp_per_name=MetdatasDICT['Exp_per_name'],
+                Exp_type_name=MetdatasDICT['Exp_type_name'],
+                Exp_amt=MetdatasDICT['Exp_amt'],
+                Exp_img=request.files['filedata'].read(),
+                Exp_FileName=files_data.filename,
+                Exp_date=MetdatasDICT['Exp_date'],
+                Exp_comm=MetdatasDICT['Exp_comm']
+            )
+            try:
+                db.session.add(newexpense)
+                db.session.commit()
+                #result = expense_schema.dump(newexpense).data
+                return {"status": 'success', 'data': 'it saves'}, 201
+            except:
+                return {'message': 'An error occurred while creating Investment Type'}, 500
+        else:
+            files_data = request.files['filedata']
+            print files_data.filename
+            print RequestValues
+            RequestForm = request.form
+            print RequestForm
+            so = RequestForm
+            json_of_metadatas = so.to_dict(flat=False)
+            print json_of_metadatas
+            MetdatasFromJSON = json_of_metadatas['jsondata']
+            print MetdatasFromJSON
+            MetdatasFromJSON0 = MetdatasFromJSON[0]
+            print MetdatasFromJSON0
+            strMetdatasFromJSON0 = str(MetdatasFromJSON0)
+            MetdatasDICT = ast.literal_eval(strMetdatasFromJSON0)
+            print MetdatasDICT
+        # Validate and deserialize input
+
+
+        newexpense = Expenses(
+                              U_id=current_user.id,
+                              per_id=MetdatasDICT['per_id'],
+                              Exp_per_name=MetdatasDICT['Exp_per_name'],
+                              Exp_type_name=MetdatasDICT['Exp_type_name'],
+                              Exp_amt=MetdatasDICT['Exp_amt'],
+                              Exp_img=request.files['filedata'].read(),
+                              Exp_FileName=files_data.filename,
+                              Exp_date=MetdatasDICT['Exp_date'],
+                              Exp_comm=MetdatasDICT['Exp_comm']
+                              )
+        try:
+            db.session.add(newexpense)
+            db.session.commit()
+            #result = expense_schema.dump(newexpense).data
+            return {"status": 'success', 'data': 'Saves fine'}, 201
+        except DatabaseError:
+            print DatabaseError
+            return {'message': 'An error occurred while creating Investment Type'}, 500
+    '''
+        #args = self.reqparse.parse_args()
         print "************DEBUG 1 ***********"
         RequestValues = request.values
         print RequestValues
@@ -53,6 +148,8 @@ class ExpenseRes(Resource):
         f.save(secure_filename(f.filename))
         print "FILE SAVED LOCALY"
         return 'JSON of customer posted'
+    '''
+
 '''
         posted_file = str(request.files['filedata'].read())
         posted_data = json.load(request.files['jsondata'])

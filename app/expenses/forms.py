@@ -18,7 +18,7 @@ class ExpenseEntryForm(FlaskForm):
     Exp_amt = FloatField('Expense Amount:-', validators=[DataRequired()])
     Exp_date = DateField('Expense Date:-', format='%Y-%m-%d', validators=[DataRequired()])
     Exp_FileName = StringField('FileName:-')
-    Exp_img = FileField('Expense Proof File:-', validators=[FileAllowed(['jpg','pdf','jpeg','png'],'Images and PDF only')])
+    Exp_img = FileField('Expense Proof File:-', validators=[FileAllowed(['jpg','pdf','jpeg','png','txt'],'Images and PDF only')])
     Exp_comm = TextAreaField('Expense Comment:-', validators=[DataRequired()])
     submit = SubmitField('Save Expense')
 

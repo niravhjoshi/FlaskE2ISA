@@ -20,25 +20,4 @@ class Earnings(db.Model):
     Ear_FileName = db.Column(db.String(300))
     Ear_comm = db.Column(db.String(200))
 
-    def ear_get_url(self):
-        return url_for('get_earnings', id=self.id, _external=True)
-
-    def ear_export_data(self):
-        return {
-            'self_url': self.get_url(),
-            'name': self.Ear_per_name
-        }
-
-    def ear_import_data(self, data):
-        try:
-            self.Ear_per_name = data['Ear_per_name'],
-            self.Ear_type_name = data['Ear_type_name'],
-            self.Ear_amt = data['Ear_amt'],
-            self.Ear_date = data['Ear_date'],
-            self.Exp_comm = data['Exp_comm'],
-            self.Ear_img = data['Ear_img'],
-            self.Ear_comm = data['Ear_comm']
-        except KeyError as e:
-            raise ValidationError('Invalid Investments Person Name: missing ' + e.args[0])
-        return self
 

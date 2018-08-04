@@ -22,7 +22,7 @@ class Expenses(db.Model):
     Exp_FileName = db.Column(db.String(300))
     Exp_date = db.Column(db.DateTime,index=True)
     Exp_comm = db.Column(db.String(200))
-
+'''
     def __init__(self,per_id,U_id,Exp_per_name,Exp_type_name,Exp_amt,Exp_img,Exp_FileName,Exp_date,Exp_comm):
 
         self.U_id = U_id
@@ -34,21 +34,28 @@ class Expenses(db.Model):
         self.Exp_FileName = Exp_FileName,
         self.Exp_date = Exp_date,
         self.Exp_comm = Exp_comm
-# Custom validator
-def must_not_be_blank(data):
-    if not data:
-        raise ValidationError('Data not provided.')
+'''
+
+class BytesField(fields.Field):
+    def _validate(self, value):
+        if type(value) is not bytes:
+            raise ValidationError('Invalid input type.')
+
+        if value is None or value == b'':
+            raise ValidationError('Invalid value')
 
 class ExpensesSchema(ma.Schema):
     class Meta:
         model = Expenses
     id = fields.Integer(dump_only=True)
     u_id = fields.Integer(dump_only=True)
-    Exp_per_name = fields.Nested(PersonSchema, validate=must_not_be_blank)
-    ExpType_name = fields.Nested(ExpTypeSchema,validate=must_not_be_blank)
+    per_id = fields.Integer(dump_only=True)
+    Exp_per_name = fields.Nested(PersonSchema,only=['per_name'])
+    ExpType_name = fields.Nested(ExpTypeSchema,only=['ExpType_name'])
     Exp_amt =fields.Float(required=True)
-    Exp_img = fields.Raw()
+    Exp_img = BytesField()
     Exp_FileName = fields.Str(allow_none=None)
+    Exp_date = fields.Date(required=True)
     Exp_comm = fields.Str(allow_none=None)
 
 
