@@ -258,3 +258,13 @@ class SingleExpenseRes(Resource):
             return {'status': 'success', 'data': expensetype}, 200
         return {'error': 'Expense   does not exist'}
 
+
+class SingleFileDownload(Resource):
+    @classmethod
+    @login_required
+    def download_att(cls,idx):
+        Expdata = Expenses.query.filter_by(u_id=current_user.id, id=idx).first()
+        if Expdata:
+            exptype = expense_schema.dump(Expdata).data
+            return {'status': 'success', 'data': exptype}, 200
+        return {'error': 'Expense Type  does not exist'}

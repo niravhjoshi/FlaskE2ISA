@@ -100,4 +100,3 @@ class SingleExpTypeRes(Resource):
             exptype = exptype_schema.dump(exptype).data
             return {'status': 'success', 'data': exptype}, 200
         return {'error': 'Expense Type  does not exist'}
-

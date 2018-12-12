@@ -5,8 +5,8 @@ from flask import url_for, current_app
 from app.utils.exceptions import ValidationError
 from sqlalchemy.dialects.mysql import LONGBLOB
 from marshmallow import  fields, pre_load, validate
-from app.models.Person_model import PersonSchema
-from app.models.ExpType_model import ExpTypeSchema
+from base64 import b64encode
+import base64
 
 #This is model defination for the Expnese Table and its api calls with get post put all covered in here.
 class Expenses(db.Model):
@@ -44,19 +44,27 @@ class BytesField(fields.Field):
         if value is None or value == b'':
             raise ValidationError('Invalid value')
 
+
 class ExpensesSchema(ma.Schema):
     class Meta:
         model = Expenses
     id = fields.Integer(dump_only=True)
     u_id = fields.Integer(dump_only=True)
     per_id = fields.Integer(dump_only=True)
-    Exp_per_name = fields.Nested(PersonSchema,only=['per_name'])
-    ExpType_name = fields.Nested(ExpTypeSchema,only=['ExpType_name'])
+    Exp_per_name = fields.Str(required=True)
+    Exp_type_name = fields.Str(required=True)
     Exp_amt =fields.Float(required=True)
-    Exp_img = BytesField()
-    Exp_FileName = fields.Str(allow_none=None)
+    Exp_img = fields.Str(allow_none=None)
+    Exp_FileName = fields.Raw(allow_none=None)
     Exp_date = fields.Date(required=True)
     Exp_comm = fields.Str(allow_none=None)
 
 
+class ExpensesImgSchema(ma.Schema):
+    class Meta:
+        model = Expenses
+    id = fields.Integer(dump_only=True)
+    u_id = fields.Integer(dump_only=True)
+    Exp_img = fields.Str(allow_none=None)
+    Exp_FileName = fields.Raw(allow_none=None)
 
